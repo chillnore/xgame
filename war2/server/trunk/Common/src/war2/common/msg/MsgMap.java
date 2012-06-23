@@ -15,30 +15,22 @@ import war2.common.XgameNullArgsError;
  * @version $Rev: 0 $
  * 
  */
-public class MsgTypeManager implements IMsgTypeManager {
+public class MsgMap implements IMsgMap {
 	/** 消息类型字典 */
-	private Map<Short, Class<? extends IMsg>> _msgMap;
+	private Map<Short, Class<? extends AbstractExternalMsg>> _msgMap;
 
 	/**
 	 * 类默认构造器
 	 * 
 	 */
-	public MsgTypeManager() {
-		this._msgMap = new HashMap<Short, Class<? extends IMsg>>();
+	public MsgMap() {
+		this._msgMap = new HashMap<Short, Class<? extends AbstractExternalMsg>>();
 	}
 
-	/**
-	 * 注册消息类
-	 * 
-	 * @param msgTypeID
-	 * @param msgClazz 
-	 * @throws XgameInvalidArgsError if msgTypeID <= 0
-	 * @throws XgameNullArgsError if msgClazz == null 
-	 * 
-	 */
-	public void register(
+	@Override
+	public void putMsgClazz(
 		short msgTypeID, 
-		Class<? extends IMsg> msgClazz) {
+		Class<? extends AbstractExternalMsg> msgClazz) {
 		if (msgTypeID <= 0) {
 			// 消息类型 ID 不能小于或等于 0
 			throw new XgameInvalidArgsError("msgTypeID <= 0");
@@ -60,7 +52,7 @@ public class MsgTypeManager implements IMsgTypeManager {
 	}
 
 	@Override
-	public Class<? extends IMsg> getMsgClazz(short msgTypeID) {
+	public Class<? extends AbstractExternalMsg> getMsgClazz(short msgTypeID) {
 		return this._msgMap.get(msgTypeID);
 	}
 }

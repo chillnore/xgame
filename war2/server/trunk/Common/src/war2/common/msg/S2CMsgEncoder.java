@@ -8,13 +8,13 @@ import org.apache.mina.filter.codec.ProtocolEncoderOutput;
 import war2.common.XgameNullArgsError;
 
 /**
- * 结果编码器
+ * Server 2 Client 消息编码器
  * 
  * @author AfritXia
  * @version $Rev: 17 $
- *
+ * 
  */
-public class GCMsgEncoder extends ProtocolEncoderAdapter {
+public class S2CMsgEncoder extends ProtocolEncoderAdapter {
 	/** 序列化器 */
 	private IMsgSerializer _serializer;
 
@@ -25,7 +25,7 @@ public class GCMsgEncoder extends ProtocolEncoderAdapter {
 	 * @throws IllegalArgumentException if serializer == null 
 	 * 
 	 */
-	public GCMsgEncoder(IMsgSerializer serializer) {
+	public S2CMsgEncoder(IMsgSerializer serializer) {
 		if (serializer == null) {
 			throw new XgameNullArgsError("serializer");
 		}
@@ -40,7 +40,7 @@ public class GCMsgEncoder extends ProtocolEncoderAdapter {
 			return;
 		}
 
-		IMsg msg = (IMsg)obj;
+		AbstractExternalMsg msg = (AbstractExternalMsg)obj;
 		// 将属性容器序列化为字节
 		byte[] bytes = this._serializer.serialize(msg);
 

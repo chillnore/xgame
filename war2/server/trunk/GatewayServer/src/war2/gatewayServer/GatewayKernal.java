@@ -42,7 +42,7 @@ public class GatewayKernal {
 	 */
 	public GatewayKernal() {
 		// 创建消息处理器
-		this._msgQueueProc = new MsgQueueProcessor(MSG_PROC_NAME);
+		this._msgQueueProc = new MsgQueueProcessor(MSG_PROC_NAME, null);
 		_glMsgIoHandler = new GLMsgIoHandler(this._msgQueueProc);
 	}
 

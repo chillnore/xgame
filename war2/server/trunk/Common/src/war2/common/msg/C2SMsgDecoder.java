@@ -10,14 +10,14 @@ import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 import war2.common.XgameNullArgsError;
 
 /**
- * CG 消息解码器
+ * Client 2 Server 消息解码器
  * 
  * @author AfritXia
  * @since 2012/1/24
  * @version $Rev: 17 $
  *
  */
-public class CGMsgDecoder extends ProtocolDecoderAdapter {
+public class C2SMsgDecoder extends ProtocolDecoderAdapter {
 	/** 序列化器 */
 	private IMsgSerializer _serializer;
 	
@@ -28,7 +28,7 @@ public class CGMsgDecoder extends ProtocolDecoderAdapter {
 	 * @throws IllegalArgumentException if serializer == null
 	 * 
 	 */
-	public CGMsgDecoder(IMsgSerializer serializer) {
+	public C2SMsgDecoder(IMsgSerializer serializer) {
 		if (serializer == null) {
 			throw new XgameNullArgsError("serializer");
 		}
@@ -55,7 +55,7 @@ public class CGMsgDecoder extends ProtocolDecoderAdapter {
 			return;
 		}
 
-		IMsg msg = this._serializer.deserialize(byteArray);
+		AbstractMsg msg = this._serializer.deserialize(byteArray);
 
 		if (msg == null) {
 			return;

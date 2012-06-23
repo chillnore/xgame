@@ -2,8 +2,7 @@ package war2.gatewayServer.msg;
 
 import org.json.JSONObject;
 
-import war2.common.msg.IMsg;
-import war2.gatewayServer.handler.CGMsgHandler;
+import war2.common.msg.AbstractExternalMsg;
 
 /**
  * 客户端通用消息
@@ -11,28 +10,11 @@ import war2.gatewayServer.handler.CGMsgHandler;
  * @author Haijiang
  *
  */
-public class CGCommonMsg implements IMsg {
-	/** 消息 ID */
-	private short _typeID;
+public class CGCommonMsg extends AbstractExternalMsg {
 	/** 原始 json 对象 */
 	private JSONObject _originalJson;
 	/** 原始消息字节 */
 	private byte[] _originalBytes;
-
-	@Override
-	public short getMsgTypeID() {
-		return this._typeID;
-	}
-
-	/**
-	 * 设置消息 ID
-	 * 
-	 * @param value
-	 * 
-	 */
-	public void setMsgTypeID(short value) {
-		this._typeID = value;
-	}
 
 	/**
 	 * 获取原始消息字节
@@ -52,11 +34,6 @@ public class CGCommonMsg implements IMsg {
 	 */
 	public void setOriginalBytes(byte[] value) {
 		this._originalBytes = value;
-	}
-
-	@Override
-	public void execute() {
-		CGMsgHandler.theInstance().handleClientCommonMsg(this);
 	}
 
 	@Override

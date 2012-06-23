@@ -4,7 +4,7 @@ import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IoSession;
 
 import war2.common.XgameNullArgsError;
-import war2.common.msg.IMsg;
+import war2.common.msg.AbstractMsg;
 import war2.common.msg.IMsgProcessor;
 
 public class GLMsgIoHandler extends IoHandlerAdapter {
@@ -44,7 +44,7 @@ public class GLMsgIoHandler extends IoHandlerAdapter {
 		}
 
 		// 处理消息对象
-		this._msgProc.enqueue((IMsg)obj);
+		this._msgProc.enqueue((AbstractMsg)obj);
 	}
 
 	public void sendMsg(Object obj) {

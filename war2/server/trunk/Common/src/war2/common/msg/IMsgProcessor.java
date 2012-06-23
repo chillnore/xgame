@@ -14,5 +14,5 @@ public interface IMsgProcessor {
 	 * @param msg
 	 * 
 	 */
-	void enqueue(IMsg msg);
+	void enqueue(AbstractMsg msg);
 }

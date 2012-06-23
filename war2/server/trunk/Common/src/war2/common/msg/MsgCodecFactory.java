@@ -35,11 +35,11 @@ public class MsgCodecFactory implements ProtocolCodecFactory {
 
 	@Override
 	public ProtocolDecoder getDecoder(IoSession sess) {
-		return new CGMsgDecoder(this._serializer);
+		return new C2SMsgDecoder(this._serializer);
 	}
 
 	@Override
 	public ProtocolEncoder getEncoder(IoSession sess) {
-		return new GCMsgEncoder(this._serializer);
+		return new S2CMsgEncoder(this._serializer);
 	}
 }

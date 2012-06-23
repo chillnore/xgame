@@ -20,12 +20,12 @@ public class MsgIoHandler extends IoHandlerAdapter {
 	 * 类参数构造器
 	 * 
 	 * @param msgProc
-	 * @throws XgameNullArgsError if msgProcr == null;
+	 * @throws XgameNullArgsError if msgProc == null;
 	 * 
 	 */
 	public MsgIoHandler(IMsgProcessor msgProc) {
 		if (msgProc == null) {
-			throw new XgameNullArgsError("msgProcr");
+			throw new XgameNullArgsError("msgProc");
 		}
 
 		this._msgProc = msgProc;
@@ -46,6 +46,6 @@ public class MsgIoHandler extends IoHandlerAdapter {
 		}
 
 		// 处理消息对象
-		this._msgProc.enqueue((IMsg)obj);
+		this._msgProc.enqueue((AbstractMsg)obj);
 	}
 }

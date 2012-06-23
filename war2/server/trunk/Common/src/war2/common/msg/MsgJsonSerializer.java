@@ -20,7 +20,7 @@ public class MsgJsonSerializer implements IMsgSerializer {
 	public static final String MSG_BODY = "msgBody";
 
 	/** 消息类型管理器 */
-	private IMsgTypeManager _msgTypeMang;
+	private IMsgMap _msgTypeMang;
 
 	/**
 	 * 类参数构造器
@@ -29,7 +29,7 @@ public class MsgJsonSerializer implements IMsgSerializer {
 	 * @throws XgameNullArgsError if msgTypeMang == null 
 	 * 
 	 */
-	public MsgJsonSerializer(IMsgTypeManager msgTypeMang) {
+	public MsgJsonSerializer(IMsgMap msgTypeMang) {
 		if (msgTypeMang == null) {
 			throw new XgameNullArgsError("msgTypeMang");
 		}
@@ -38,7 +38,7 @@ public class MsgJsonSerializer implements IMsgSerializer {
 	}
 
 	@Override
-	public IMsg deserialize(byte[] byteArray) {
+	public AbstractMsg deserialize(byte[] byteArray) {
 		if (byteArray == null) {
 			return null;
 		}
@@ -53,7 +53,7 @@ public class MsgJsonSerializer implements IMsgSerializer {
 			int msgTypeID = jsonObj.getInt(MSG_TYPE_ID);
 
 			// 获取消息类
-			Class<? extends IMsg> msgClazz = this._msgTypeMang.getMsgClazz((short)msgTypeID);
+			Class<? extends AbstractExternalMsg> msgClazz = this._msgTypeMang.getMsgClazz((short)msgTypeID);
 
 			if (msgClazz == null) {
 				// 如果消息类为空, 则直接返回!
@@ -63,7 +63,7 @@ public class MsgJsonSerializer implements IMsgSerializer {
 			// 获取消息体
 			jsonObj = jsonObj.getJSONObject(MSG_BODY);
 			// 创建消息对象
-			IMsg msgObj = msgClazz.newInstance();
+			AbstractExternalMsg msgObj = msgClazz.newInstance();
 
 			// 反序列化消息对象并返回
 			msgObj.deserializeFromJson(jsonObj);
@@ -76,7 +76,7 @@ public class MsgJsonSerializer implements IMsgSerializer {
 	}
 
 	@Override
-	public byte[] serialize(IMsg msg) {
+	public byte[] serialize(AbstractExternalMsg msg) {
 		if (msg == null) {
 			return null;
 		}

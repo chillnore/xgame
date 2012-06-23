@@ -15,7 +15,7 @@ public interface IMsgSerializer {
 	 * @return
 	 * 
 	 */
-	IMsg deserialize(byte[] bytes);
+	AbstractMsg deserialize(byte[] bytes);
 
 	/**
 	 * 将消息对象序列化为字节数组
@@ -24,5 +24,5 @@ public interface IMsgSerializer {
 	 * @return 
 	 * 
 	 */
-	byte[] serialize(IMsg msg);
+	byte[] serialize(AbstractExternalMsg msg);
 }
