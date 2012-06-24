@@ -12,7 +12,7 @@ import war2.gatewayServer.msg.CGCommonMsg;
  */
 public class CGMsgHandler {
 	/** 单例对象 */
-	private static CGMsgHandler _instance;
+	private static volatile CGMsgHandler _instance;
 
 	/**
 	 * 类默认构造器

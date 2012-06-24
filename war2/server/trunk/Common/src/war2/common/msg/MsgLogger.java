@@ -11,7 +11,7 @@ import war2.common.XgameLogger;
  */
 public class MsgLogger extends XgameLogger {
 	/** 单例对象 */
-	private static MsgLogger _theInstance;
+	private static volatile MsgLogger _theInstance;
 	
 	/**
 	 * 类默认构造器
