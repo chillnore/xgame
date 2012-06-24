@@ -22,8 +22,8 @@ public class MsgQueueProcessor implements IMsgProcessor {
 	 * 
 	 * @param name 消息处理器名称
 	 * @param msgActionMap 消息行为字典
-	 * @throws XgameNullArgsError name == null
-	 * @throws XgameNullArgsError msgActionMap == null 
+	 * @throws XgameNullArgsError if name == null
+	 * @throws XgameNullArgsError if msgActionMap == null 
 	 * 
 	 */
 	public MsgQueueProcessor(String name, IMsgActionMap msgActionMap) {

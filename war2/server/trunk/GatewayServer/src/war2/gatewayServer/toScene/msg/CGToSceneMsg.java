@@ -1,4 +1,4 @@
-package war2.gatewayServer.msg;
+package war2.gatewayServer.toScene.msg;
 
 import org.json.JSONObject;
 
@@ -10,7 +10,7 @@ import war2.common.msg.AbstractExternalMsg;
  * @author Haijiang
  *
  */
-public class CGCommonMsg extends AbstractExternalMsg {
+public class CGToSceneMsg extends AbstractExternalMsg {
 	/** 原始 json 对象 */
 	private JSONObject _originalJson;
 	/** 原始消息字节 */

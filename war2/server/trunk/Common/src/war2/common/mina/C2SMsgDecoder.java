@@ -1,4 +1,4 @@
-package war2.common.msg;
+package war2.common.mina;
 
 import java.io.IOException;
 
@@ -8,6 +8,10 @@ import org.apache.mina.filter.codec.ProtocolDecoderAdapter;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 
 import war2.common.XgameNullArgsError;
+import war2.common.msg.AbstractMsg;
+import war2.common.msg.IMsgSerializer;
+import war2.common.msg.MsgLogger;
+import war2.common.msg.XgameMsgError;
 
 /**
  * Client 2 Server 消息解码器

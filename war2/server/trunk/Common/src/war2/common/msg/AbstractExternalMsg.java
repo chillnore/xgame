@@ -8,7 +8,7 @@ import org.json.JSONObject;
  * @author hjj2017
  *
  */
-public abstract class AbstractExternalMsg extends AbstractMsg {
+public abstract class AbstractExternalMsg extends AbstractMsg implements Cloneable {
 	/**
 	 * 序列化为 JSON 对象
 	 * 
@@ -36,4 +36,24 @@ public abstract class AbstractExternalMsg extends AbstractMsg {
 	 * @param bytes
 	 */
 	public abstract void deserializeFromBytes(byte[] bytes);
+
+	/**
+	 * 复制一个新的对象
+	 * 
+	 * @return 
+	 * 
+	 */
+	public<T extends AbstractExternalMsg> T copy() {
+		try {
+			// 复制一个新的对象
+			@SuppressWarnings("unchecked")
+			T obj_copy = (T)super.clone();
+
+			return obj_copy;
+		} catch (Exception ex) {
+			// 抛出运行时异常
+			throw new RuntimeException(ex);
+		}
+	}
 }
+

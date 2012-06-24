@@ -9,18 +9,19 @@ package war2.common.msg;
  */
 public interface IMsgMap {
 	/**
-	 * 获取消息类
+	 * 获取消息对象
 	 * 
 	 * @param msgTypeID
-	 * @return
+	 * @return 
+	 * 
 	 */
-	Class<? extends AbstractExternalMsg> getMsgClazz(short msgTypeID);
+	AbstractExternalMsg getMsg(short msgTypeID);
 
 	/**
-	 * 设置消息类
+	 * 设置消息对象
 	 * 
-	 * @param msgTypeID
-	 * @param clazz
+	 * @param msg 
+	 * 
 	 */
-	void putMsgClazz(short msgTypeID, Class<? extends AbstractExternalMsg> clazz);
+	void putMsg(AbstractExternalMsg msg);
 }

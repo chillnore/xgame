@@ -1,4 +1,4 @@
-package war2.gatewayServer.msg;
+package war2.gatewayServer.kernal;
 
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IoSession;
@@ -7,8 +7,14 @@ import war2.common.XgameNullArgsError;
 import war2.common.msg.AbstractMsg;
 import war2.common.msg.IMsgProcessor;
 
-public class GLMsgIoHandler extends IoHandlerAdapter {
-	private IoSession _sess;
+/**
+ * 消息 IO 处理器
+ *  
+ * @author AfritXia
+ * @since 2012/6/3
+ *
+ */
+public class GatewayIoHandler extends IoHandlerAdapter {
 	/** 消息处理器 */
 	private IMsgProcessor _msgProc;
 
@@ -16,10 +22,10 @@ public class GLMsgIoHandler extends IoHandlerAdapter {
 	 * 类参数构造器
 	 * 
 	 * @param msgProc
-	 * @throws XgameNullArgsError if msgProcr == null;
+	 * @throws XgameNullArgsError if msgProc == null;
 	 * 
 	 */
-	public GLMsgIoHandler(IMsgProcessor msgProc) {
+	public GatewayIoHandler(IMsgProcessor msgProc) {
 		if (msgProc == null) {
 			throw new XgameNullArgsError("msgProc");
 		}
@@ -31,8 +37,6 @@ public class GLMsgIoHandler extends IoHandlerAdapter {
 	public void sessionCreated(IoSession sess) {
 		if (sess == null) {
 			return;
-		} else {
-			this._sess = sess;
 		}
 	}
 
@@ -45,9 +49,5 @@ public class GLMsgIoHandler extends IoHandlerAdapter {
 
 		// 处理消息对象
 		this._msgProc.enqueue((AbstractMsg)obj);
-	}
-
-	public void sendMsg(Object obj) {
-		this._sess.write(obj);
 	}
 }

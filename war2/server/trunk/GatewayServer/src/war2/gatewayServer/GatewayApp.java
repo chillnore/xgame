@@ -1,5 +1,7 @@
 package war2.gatewayServer;
 
+import war2.gatewayServer.kernal.GatewayKernal;
+
 /**
  * 主应用程序类
  * 
@@ -15,7 +17,9 @@ public class GatewayApp {
 	 * 
 	 */
 	public static void main(String[] args) {
+		// 创建内核程序
 		GatewayKernal k = new GatewayKernal();
+		// 启动网关服务器
 		k.startUp();
 	}
 }

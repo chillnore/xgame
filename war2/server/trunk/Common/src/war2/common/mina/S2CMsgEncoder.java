@@ -1,4 +1,4 @@
-package war2.common.msg;
+package war2.common.mina;
 
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
@@ -6,6 +6,8 @@ import org.apache.mina.filter.codec.ProtocolEncoderAdapter;
 import org.apache.mina.filter.codec.ProtocolEncoderOutput;
 
 import war2.common.XgameNullArgsError;
+import war2.common.msg.AbstractExternalMsg;
+import war2.common.msg.IMsgSerializer;
 
 /**
  * Server 2 Client 消息编码器
