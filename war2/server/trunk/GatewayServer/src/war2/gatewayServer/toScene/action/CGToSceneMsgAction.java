@@ -47,7 +47,7 @@ public class CGToSceneMsgAction extends GatewayMsgAction<CGToSceneMsg> {
 			new MsgJsonSerializer(null));
 
 		// 创建 IO 处理器
-		this._ioHandler = new CGToSceneIoHandler(GatewayKernal.theKernal().getMsgQueueProcessor());
+		this._ioHandler = new CGToSceneIoHandler(GatewayKernal.theInstance().getMsgQueueProcessor());
 		
 		// 添加消息解码器
 		conn.getFilterChain().addLast(GS_MSG_CODEC, new ProtocolCodecFilter(mcf));

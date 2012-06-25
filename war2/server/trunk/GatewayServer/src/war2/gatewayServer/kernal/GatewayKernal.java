@@ -25,8 +25,8 @@ public class GatewayKernal {
 	/** client --&gt; gateway 消息解码器 */
 	private static final String CG_MSG_CODEC = "xgame::GatewayServer::cgMsgCodec";
 
-	/** 内核对象 */
-	private static GatewayKernal _kernal;
+	/** 对象实例 */
+	private static volatile GatewayKernal _instance;
 	/** 消息处理器 */
 	private MsgQueueProcessor _msgQueueProc;
 
@@ -34,22 +34,25 @@ public class GatewayKernal {
 	 * 类默认构造器
 	 * 
 	 */
-	public GatewayKernal() {
-		// 创建消息处理器
-		this._msgQueueProc = new MsgQueueProcessor(MSG_PROC_NAME, null);
-
-		// 设置内核对象
-		_kernal = this;
+	private GatewayKernal() {
 	}
 
 	/**
-	 * 获取内核对象
+	 * 获取对象实例
 	 * 
-	 * @return 
+	 * @return
 	 * 
 	 */
-	public static GatewayKernal theKernal() {
-		return _kernal;
+	public static GatewayKernal theInstance() {
+		if (_instance == null) {
+			synchronized (GatewayKernal.class) {
+				if (_instance == null) {
+					_instance = new GatewayKernal();
+				}
+			}
+		}
+
+		return _instance;
 	}
 
 	/**
@@ -60,6 +63,15 @@ public class GatewayKernal {
 	 */
 	public MsgQueueProcessor getMsgQueueProcessor() {
 		return this._msgQueueProc;
+	}
+
+	/**
+	 * 初始化服务器
+	 * 
+	 */
+	public void init() {
+		// 创建消息处理器
+		this._msgQueueProc = new MsgQueueProcessor(MSG_PROC_NAME, null);
 	}
 
 	/**
@@ -95,7 +107,7 @@ public class GatewayKernal {
 		cfg.setIdleTime(IdleStatus.BOTH_IDLE, 10);
 
 		// 设置 IO 句柄
-		acceptor.setHandler(new GatewayIoHandler(GatewayKernal.theKernal().getMsgQueueProcessor()));
+		acceptor.setHandler(new GatewayIoHandler(GatewayKernal.theInstance().getMsgQueueProcessor()));
 
 		try {
 			// 绑定端口
