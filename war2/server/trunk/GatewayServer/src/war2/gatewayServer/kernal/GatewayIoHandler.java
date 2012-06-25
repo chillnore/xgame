@@ -38,6 +38,9 @@ public class GatewayIoHandler extends IoHandlerAdapter {
 		if (sess == null) {
 			return;
 		}
+
+		// TODO : 为玩家分派一个 SessionID
+		// TODO : 将 Session 加入到 OnlineSessionManager
 	}
 
 	@Override

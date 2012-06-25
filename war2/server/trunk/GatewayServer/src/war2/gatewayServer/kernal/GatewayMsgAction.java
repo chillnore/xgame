@@ -34,8 +34,43 @@ public class GatewayMsgAction<TMsg extends AbstractMsg> implements IMsgAction<TM
 
 		if (sess == null) {
 			return;
+		} else {
+			sess.write(msg);
+		}
+	}
+
+	/**
+	 * 设置对象实例到 Session 
+	 * 
+	 * @param key
+	 * @param value 
+	 * @param sessionID
+	 * 
+	 */
+	protected void putKeyValue2Session(String key, Object value, long sessionID) {
+		if (sessionID <= 0) {
+			return;
 		}
 
-		sess.write(msg);
+		if (key == null || 
+			key.isEmpty()) {
+			return;
+		}
+
+		// 获取会话对象
+		IoSession sess = OnlineSessionManager.theInstance().getSessionByID(sessionID);
+
+		if (sess == null) {
+			return;
+		}
+
+		if (value == null) {
+			// 如果值为空, 
+			// 则直接移除会话中的属性
+			sess.removeAttribute(key);
+		} else {
+			// 设置会话属性值
+			sess.setAttribute(key, value);
+		}
 	}
 }
