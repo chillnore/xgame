@@ -20,7 +20,7 @@ final class OnlineSessionManager {
 	/** 会话字典 */
 	private Map<Long, IoSession> _sessionMap;
 	/** 玩家 ID => 会话 ID 字典 */
-	private Map<String, Long> _playerID2SessionIDMap;
+	private Map<String, Long> _playerIDToSessionIDMap;
 
 	/**
 	 * 类默认构造器
@@ -52,7 +52,10 @@ final class OnlineSessionManager {
 	 * 
 	 */
 	private void init() {
+		// 创建 IO 会话字典
 		this._sessionMap = new ConcurrentHashMap<Long, IoSession>();
+		// 创玩家 ID 到会话 ID 的字典
+		this._playerIDToSessionIDMap = new ConcurrentHashMap<String, Long>();
 	}
 
 	/**
@@ -66,10 +69,9 @@ final class OnlineSessionManager {
 			return;
 		}
 
-		Long sessionID = session.getId();
+		long sessionID = session.getId();
 
-		if (sessionID == null || 
-			sessionID <= 0) {
+		if (sessionID <= 0) {
 			return;
 		} else {
 			this._sessionMap.put(sessionID, session);
@@ -98,7 +100,32 @@ final class OnlineSessionManager {
 	 * @param player
 	 * 
 	 */
-	public void putPlayer2Session(Object player, long sessionID) {
+	public void putPlayerToSession(Player player, long sessionID) {
+		if (player == null || 
+			sessionID <= 0) {
+			return;
+		}
+
+		// 获取会话对象
+		IoSession session = this.getSessionByID(sessionID);
+
+		if (session == null) {
+			return;
+		}
+
+		// 将玩家对象存入会话对象
+		session.setAttribute(SESSION_PLAYER_KEY, player);
+		// 管家玩家 ID 和 会话 ID
+		this._playerIDToSessionIDMap.put(player.getID(), sessionID);
+	}
+
+	/**
+	 * 取消 IO 会话与 Player 对象的关联
+	 * 
+	 * @param sessionID
+	 * 
+	 */
+	public void removePlayerFromSession(long sessionID) {
 		if (sessionID <= 0) {
 			return;
 		}
@@ -110,15 +137,17 @@ final class OnlineSessionManager {
 			return;
 		}
 
-		if (player == null) {
-			// 如果玩家对象为空, 
-			// 则清除会话中保存的玩家对象
-			session.removeAttribute(SESSION_PLAYER_KEY);
-		} else {
+		// 获取玩家对象
+		Player player = (Player)session.getAttribute(SESSION_PLAYER_KEY);
+
+		if (player != null) {
 			// 如果玩家对象不为空, 
-			// 将玩家对象存入会话对象
-			session.setAttribute(SESSION_PLAYER_KEY, player);
+			// 则取消玩家 ID 与会话 ID 的关联关系!
+			this._playerIDToSessionIDMap.remove(player.getID());
 		}
+
+		// 将玩家对象移出会话对象
+		session.removeAttribute(SESSION_PLAYER_KEY);
 	}
 
 	/**
@@ -129,6 +158,33 @@ final class OnlineSessionManager {
 	 * 
 	 */
 	public IoSession getSessionByPlayerID(String playerID) {
-		return null;
+		if (playerID == null || 
+			playerID.isEmpty()) {
+			return null;
+		}
+
+		// 获取会话 ID
+		Long sessionID = this._playerIDToSessionIDMap.get(playerID);
+
+		if (sessionID == null || 
+			sessionID <= 0) {
+			return null;
+		}
+
+		// 获取 IO 会话对象
+		IoSession session = this._sessionMap.get(sessionID);
+
+		if (session == null) {
+			// 
+			// 如果 IO 会话对象为空, 
+			// 则取消玩家 ID 与会话 ID 的关联关系!
+			// 注意: 一定是现有 IoSession, 然后才有的 Player...
+			// 如果 IoSession 已经不存在了, 
+			// 那么 Player 也必然不存在!
+			// 
+			this._playerIDToSessionIDMap.remove(playerID);
+		}
+
+		return session;
 	}
 }

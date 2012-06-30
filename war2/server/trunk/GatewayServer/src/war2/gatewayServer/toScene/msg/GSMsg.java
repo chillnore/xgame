@@ -5,12 +5,12 @@ import org.json.JSONObject;
 import war2.common.msg.AbstractExternalMsg;
 
 /**
- * 客户端通用消息
+ * 将网关服务器发送到场景服务器的消息
  * 
  * @author Haijiang
  *
  */
-public class CGToSceneMsg extends AbstractExternalMsg {
+public class GSMsg extends AbstractExternalMsg {
 	/** 原始 json 对象 */
 	private JSONObject _originalJson;
 	/** 原始消息字节 */

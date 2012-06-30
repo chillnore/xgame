@@ -10,7 +10,7 @@ import war2.common.mina.MinaCodecFactory;
 import war2.common.msg.MsgJsonSerializer;
 import war2.gatewayServer.kernal.GatewayKernal;
 import war2.gatewayServer.kernal.GatewayMsgAction;
-import war2.gatewayServer.toScene.msg.CGToSceneMsg;
+import war2.gatewayServer.toScene.msg.GSMsg;
 
 /**
  * 将消息发送给场景服务器
@@ -19,17 +19,17 @@ import war2.gatewayServer.toScene.msg.CGToSceneMsg;
  * @since 2012/6/3
  *
  */
-public class CGToSceneMsgAction extends GatewayMsgAction<CGToSceneMsg> {
+public class GSMsgAction extends GatewayMsgAction<GSMsg> {
 	/** gateway --&gt; scene 消息解码器 */
 	private static final String GS_MSG_CODEC = "xgame::GatewayServer::gsMsgCodec";
 	/** IO 处理器 */
-	private CGToSceneIoHandler _ioHandler;
+	private GSIoHandler _ioHandler;
 
 	/**
 	 * 类默认构造器
 	 * 
 	 */
-	public CGToSceneMsgAction() {
+	public GSMsgAction() {
 		// 连接到场景服务器
 		this.connectSceneServer();
 	}
@@ -47,7 +47,7 @@ public class CGToSceneMsgAction extends GatewayMsgAction<CGToSceneMsg> {
 			new MsgJsonSerializer(null));
 
 		// 创建 IO 处理器
-		this._ioHandler = new CGToSceneIoHandler(GatewayKernal.theInstance().getMsgQueueProcessor());
+		this._ioHandler = new GSIoHandler(GatewayKernal.theInstance().getMsgQueueProcessor());
 		
 		// 添加消息解码器
 		conn.getFilterChain().addLast(GS_MSG_CODEC, new ProtocolCodecFilter(mcf));
@@ -66,11 +66,11 @@ public class CGToSceneMsgAction extends GatewayMsgAction<CGToSceneMsg> {
 	}
 
 	@Override
-	public void execute(CGToSceneMsg cgmsg) {
+	public void execute(GSMsg cgmsg) {
 		if (cgmsg == null) {
 			return;
 		} else {
-			this._ioHandler.sendMsg2Scene(cgmsg);
+			this._ioHandler.sendMsgToScene(cgmsg);
 		}
 	}
 }

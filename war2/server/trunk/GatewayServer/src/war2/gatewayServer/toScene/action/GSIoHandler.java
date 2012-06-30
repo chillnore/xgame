@@ -13,9 +13,9 @@ import war2.common.msg.IMsgProcessor;
  * @author hjj2019
  *
  */
-public class CGToSceneIoHandler extends IoHandlerAdapter {
+public class GSIoHandler extends IoHandlerAdapter {
 	/** IO 会话 */
-	private IoSession _sess;
+	private IoSession _session;
 	/** 消息处理器 */
 	private IMsgProcessor _msgProc;
 
@@ -26,7 +26,7 @@ public class CGToSceneIoHandler extends IoHandlerAdapter {
 	 * @throws XgameNullArgsError if msgProcr == null;
 	 * 
 	 */
-	public CGToSceneIoHandler(IMsgProcessor msgProc) {
+	public GSIoHandler(IMsgProcessor msgProc) {
 		if (msgProc == null) {
 			throw new XgameNullArgsError("msgProc");
 		}
@@ -35,17 +35,17 @@ public class CGToSceneIoHandler extends IoHandlerAdapter {
 	}
 
 	@Override
-	public void sessionCreated(IoSession sess) {
-		if (sess == null) {
+	public void sessionCreated(IoSession session) {
+		if (session == null) {
 			return;
 		} else {
-			this._sess = sess;
+			this._session = session;
 		}
 	}
 
 	@Override
-	public void messageReceived(IoSession sess, Object obj) {
-		if (sess == null || 
+	public void messageReceived(IoSession session, Object obj) {
+		if (session == null || 
 			obj == null) {
 			return;
 		}
@@ -60,7 +60,7 @@ public class CGToSceneIoHandler extends IoHandlerAdapter {
 	 * @param msg
 	 * 
 	 */
-	public void sendMsg2Scene(AbstractMsg msg) {
-		this._sess.write(msg);
+	public void sendMsgToScene(AbstractMsg msg) {
+		this._session.write(msg);
 	}
 }
