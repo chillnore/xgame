@@ -1,4 +1,4 @@
-package war2.common.mina;
+package war2.common.msg;
 
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFactory;
@@ -6,7 +6,6 @@ import org.apache.mina.filter.codec.ProtocolDecoder;
 import org.apache.mina.filter.codec.ProtocolEncoder;
 
 import war2.common.XgameNullArgsError;
-import war2.common.msg.IMsgSerializer;
 
 /**
  * 消息编解码器工厂类
@@ -15,7 +14,7 @@ import war2.common.msg.IMsgSerializer;
  * @since 2012/1/24
  * 
  */
-public class MinaCodecFactory implements ProtocolCodecFactory {
+public class MINA_CodecFactory implements ProtocolCodecFactory {
 	/** 序列化器 */
 	private IMsgSerializer _serializer;
 
@@ -26,7 +25,7 @@ public class MinaCodecFactory implements ProtocolCodecFactory {
 	 * @throws XgameNullArgsError if serializer == null 
 	 * 
 	 */
-	public MinaCodecFactory(IMsgSerializer serializer) {
+	public MINA_CodecFactory(IMsgSerializer serializer) {
 		if (serializer == null) {
 			throw new XgameNullArgsError("serializer");
 		}
@@ -35,12 +34,14 @@ public class MinaCodecFactory implements ProtocolCodecFactory {
 	}
 
 	@Override
-	public ProtocolDecoder getDecoder(IoSession sess) {
-		return new C2SMsgDecoder(this._serializer);
+	public ProtocolDecoder getDecoder(IoSession session) {
+		return new MINA_C2SMsgDecoder(
+			this._serializer);
 	}
 
 	@Override
-	public ProtocolEncoder getEncoder(IoSession sess) {
-		return new S2CMsgEncoder(this._serializer);
+	public ProtocolEncoder getEncoder(IoSession session) {
+		return new MINA_S2CMsgEncoder(
+			this._serializer);
 	}
 }

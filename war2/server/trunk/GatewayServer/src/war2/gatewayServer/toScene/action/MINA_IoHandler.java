@@ -13,7 +13,7 @@ import war2.common.msg.IMsgProcessor;
  * @author hjj2019
  *
  */
-public class GSIoHandler extends IoHandlerAdapter {
+class MINA_IoHandler extends IoHandlerAdapter {
 	/** IO 会话 */
 	private IoSession _session;
 	/** 消息处理器 */
@@ -26,7 +26,7 @@ public class GSIoHandler extends IoHandlerAdapter {
 	 * @throws XgameNullArgsError if msgProcr == null;
 	 * 
 	 */
-	public GSIoHandler(IMsgProcessor msgProc) {
+	public MINA_IoHandler(IMsgProcessor msgProc) {
 		if (msgProc == null) {
 			throw new XgameNullArgsError("msgProc");
 		}
@@ -50,8 +50,10 @@ public class GSIoHandler extends IoHandlerAdapter {
 			return;
 		}
 
+		AbstractMsg msg = (AbstractMsg)obj;
+
 		// 处理消息对象
-		this._msgProc.enqueue((AbstractMsg)obj);
+		this._msgProc.enqueue(msg);
 	}
 
 	/**

@@ -1,4 +1,4 @@
-package war2.common.mina;
+package war2.common.msg;
 
 import java.io.IOException;
 
@@ -8,10 +8,6 @@ import org.apache.mina.filter.codec.ProtocolDecoderAdapter;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 
 import war2.common.XgameNullArgsError;
-import war2.common.msg.AbstractMsg;
-import war2.common.msg.IMsgSerializer;
-import war2.common.msg.MsgLogger;
-import war2.common.msg.XgameMsgError;
 
 /**
  * Client 2 Server 消息解码器
@@ -21,7 +17,7 @@ import war2.common.msg.XgameMsgError;
  * @version $Rev: 17 $
  *
  */
-public class C2SMsgDecoder extends ProtocolDecoderAdapter {
+class MINA_C2SMsgDecoder extends ProtocolDecoderAdapter {
 	/** 序列化器 */
 	private IMsgSerializer _serializer;
 	
@@ -32,7 +28,7 @@ public class C2SMsgDecoder extends ProtocolDecoderAdapter {
 	 * @throws IllegalArgumentException if serializer == null
 	 * 
 	 */
-	public C2SMsgDecoder(IMsgSerializer serializer) {
+	public MINA_C2SMsgDecoder(IMsgSerializer serializer) {
 		if (serializer == null) {
 			throw new XgameNullArgsError("serializer");
 		}
@@ -41,7 +37,7 @@ public class C2SMsgDecoder extends ProtocolDecoderAdapter {
 	}
 	
 	@Override
-	public void decode(IoSession sess, IoBuffer buff, ProtocolDecoderOutput output) {
+	public void decode(IoSession session, IoBuffer buff, ProtocolDecoderOutput output) {
 		if (buff == null || 
 			output == null) {
 			return;
@@ -65,6 +61,9 @@ public class C2SMsgDecoder extends ProtocolDecoderAdapter {
 			return;
 		}
 
+		// 设置会话 ID
+		msg.setSessionID(session.getId());
+		
 		// 清除缓存
 		buff.position(buff.limit());
 		buff.free();

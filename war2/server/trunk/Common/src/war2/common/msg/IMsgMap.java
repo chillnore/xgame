@@ -20,8 +20,9 @@ public interface IMsgMap {
 	/**
 	 * 设置消息对象
 	 * 
+	 * @param msgTypeID 
 	 * @param msg 
 	 * 
 	 */
-	void putMsg(AbstractExternalMsg msg);
+	void putMsg(short msgTypeID, AbstractExternalMsg msg);
 }

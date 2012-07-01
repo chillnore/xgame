@@ -6,11 +6,12 @@ import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 
-import war2.common.mina.MinaCodecFactory;
+import war2.common.msg.MINA_CodecFactory;
 import war2.common.msg.MsgJsonSerializer;
 import war2.gatewayServer.kernal.GatewayKernal;
 import war2.gatewayServer.kernal.GatewayMsgAction;
-import war2.gatewayServer.toScene.msg.GSMsg;
+import war2.gatewayServer.kernal.Player;
+import war2.gatewayServer.toScene.msg.GSToSceneMsg;
 
 /**
  * 将消息发送给场景服务器
@@ -19,17 +20,17 @@ import war2.gatewayServer.toScene.msg.GSMsg;
  * @since 2012/6/3
  *
  */
-public class GSMsgAction extends GatewayMsgAction<GSMsg> {
+public class GSToSceneMsgAction extends GatewayMsgAction<GSToSceneMsg> {
 	/** gateway --&gt; scene 消息解码器 */
 	private static final String GS_MSG_CODEC = "xgame::GatewayServer::gsMsgCodec";
 	/** IO 处理器 */
-	private GSIoHandler _ioHandler;
+	private MINA_IoHandler _ioHandler;
 
 	/**
 	 * 类默认构造器
 	 * 
 	 */
-	public GSMsgAction() {
+	public GSToSceneMsgAction() {
 		// 连接到场景服务器
 		this.connectSceneServer();
 	}
@@ -43,11 +44,11 @@ public class GSMsgAction extends GatewayMsgAction<GSMsg> {
 		NioSocketConnector conn = new NioSocketConnector();
 
 		// 消息解码器工厂
-		MinaCodecFactory mcf = new MinaCodecFactory(
+		MINA_CodecFactory mcf = new MINA_CodecFactory(
 			new MsgJsonSerializer(null));
 
 		// 创建 IO 处理器
-		this._ioHandler = new GSIoHandler(GatewayKernal.theInstance().getMsgQueueProcessor());
+		this._ioHandler = new MINA_IoHandler(GatewayKernal.theInstance().getMsgQueueProcessor());
 		
 		// 添加消息解码器
 		conn.getFilterChain().addLast(GS_MSG_CODEC, new ProtocolCodecFilter(mcf));
@@ -66,11 +67,28 @@ public class GSMsgAction extends GatewayMsgAction<GSMsg> {
 	}
 
 	@Override
-	public void execute(GSMsg cgmsg) {
+	public void execute(GSToSceneMsg cgmsg) {
 		if (cgmsg == null) {
 			return;
-		} else {
-			this._ioHandler.sendMsgToScene(cgmsg);
 		}
+
+		// 获取会话 ID
+		long sessionID = cgmsg.getSessionID();
+
+		if (sessionID <= 0) {
+			return;
+		}
+
+		// 获取玩家对象
+		Player player = this.getPlayerBySessionId(sessionID);
+
+		if (player == null) {
+			return;
+		}
+
+		// 设置玩家 ID
+		cgmsg.setPlayerID(player.getID());
+		// 发送消息到场景服务器
+		this._ioHandler.sendMsgToScene(cgmsg);
 	}
 }

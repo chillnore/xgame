@@ -14,7 +14,7 @@ import war2.common.msg.IMsgProcessor;
  * @since 2012/6/3
  *
  */
-public class GatewayIoHandler extends IoHandlerAdapter {
+class MINA_IoHandler extends IoHandlerAdapter {
 	/** 消息处理器 */
 	private IMsgProcessor _msgProc;
 
@@ -25,7 +25,7 @@ public class GatewayIoHandler extends IoHandlerAdapter {
 	 * @throws XgameNullArgsError if msgProc == null;
 	 * 
 	 */
-	public GatewayIoHandler(IMsgProcessor msgProc) {
+	public MINA_IoHandler(IMsgProcessor msgProc) {
 		if (msgProc == null) {
 			throw new XgameNullArgsError("msgProc");
 		}

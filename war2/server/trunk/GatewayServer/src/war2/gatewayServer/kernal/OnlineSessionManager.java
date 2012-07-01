@@ -125,7 +125,7 @@ final class OnlineSessionManager {
 	 * @param sessionID
 	 * 
 	 */
-	public void removePlayerFromSession(long sessionID) {
+	public void removePlayerBySession(long sessionID) {
 		if (sessionID <= 0) {
 			return;
 		}
@@ -186,5 +186,27 @@ final class OnlineSessionManager {
 		}
 
 		return session;
+	}
+
+	/**
+	 * 根据会话 ID 获取玩家对象
+	 * 
+	 * @param sessionID
+	 * @return
+	 * 
+	 */
+	public Player getPlayerBySessionId(long sessionID) {
+		if (sessionID <= 0) {
+			return null;
+		}
+
+		// 获取会话对象
+		IoSession session = this.getSessionByID(sessionID);
+
+		if (session == null) {
+			return null;
+		} else {
+			return (Player)session.getAttribute(SESSION_PLAYER_KEY);
+		}
 	}
 }

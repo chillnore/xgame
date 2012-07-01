@@ -8,7 +8,7 @@ import org.apache.mina.core.session.IoSessionConfig;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
-import war2.common.mina.MinaCodecFactory;
+import war2.common.msg.MINA_CodecFactory;
 import war2.common.msg.MsgJsonSerializer;
 import war2.common.msg.MsgQueueProcessor;
 
@@ -71,7 +71,9 @@ public class GatewayKernal {
 	 */
 	public void init() {
 		// 创建消息处理器
-		this._msgQueueProc = new MsgQueueProcessor(MSG_PROC_NAME, null);
+		this._msgQueueProc = new MsgQueueProcessor(
+			MSG_PROC_NAME, 
+			MsgActionMapBuilder.build());
 	}
 
 	/**
@@ -92,8 +94,7 @@ public class GatewayKernal {
 		IoAcceptor acceptor = new NioSocketAcceptor();
 
 		// 消息解码器工厂
-		MinaCodecFactory mcf = new MinaCodecFactory(
-			new MsgJsonSerializer(null));
+		MINA_CodecFactory mcf = new MINA_CodecFactory(new MsgJsonSerializer(MsgMapBuilder.build()));
 
 		// 添加自定义编解码器
 		acceptor.getFilterChain().addLast(CG_MSG_CODEC, new ProtocolCodecFilter(mcf));
@@ -107,7 +108,7 @@ public class GatewayKernal {
 		cfg.setIdleTime(IdleStatus.BOTH_IDLE, 10);
 
 		// 设置 IO 句柄
-		acceptor.setHandler(new GatewayIoHandler(GatewayKernal.theInstance().getMsgQueueProcessor()));
+		acceptor.setHandler(new MINA_IoHandler(GatewayKernal.theInstance().getMsgQueueProcessor()));
 
 		try {
 			// 绑定端口

@@ -28,32 +28,40 @@ public class MsgMap implements IMsgMap {
 	}
 
 	@Override
-	public void putMsg(AbstractExternalMsg msg) {
-		if (msg == null) {
-			throw new XgameNullArgsError("msg");
-		}
-
-		if (msg.getMsgTypeID() <= 0) {
-			// 消息类型 ID 不能小于或等于 0
-			throw new XgameInvalidArgsError("msgTypeID <= 0");
-		}
-
-		if (this._msgMap.containsKey(msg.getMsgTypeID())) {
-			// 如果消息类型 ID 已经被注册过, 
-			// 则直接抛出异常
-			throw new XgameMsgError("msgTypeID is duplicate, msgTypeID = " + msg.getMsgTypeID());
-		}
-
-		// 设置消息
-		this._msgMap.put(msg.getMsgTypeID(), msg);
-	}
-
-	@Override
 	public AbstractExternalMsg getMsg(short msgTypeID) {
 		if (msgTypeID <= 0) {
 			return null;
 		} else {
 			return this._msgMap.get(msgTypeID);
+		}
+	}
+
+	@Override
+	public void putMsg(short msgTypeID, AbstractExternalMsg msg) {
+		if (msgTypeID <= 0) {
+			// 消息类型 ID 不能小于或等于 0
+			throw new XgameInvalidArgsError("msgTypeID <= 0");
+		}
+
+		if (msg == null) {
+			throw new XgameNullArgsError("msg");
+		}
+
+		if (this._msgMap.containsKey(msgTypeID)) {
+			// 如果消息类型 ID 已经被注册过, 
+			// 则直接抛出异常
+			throw new XgameMsgError("msgTypeID " + msgTypeID +" is duplicate");
+		}
+
+		// 设置消息
+		this._msgMap.put(msgTypeID, msg);
+	}
+
+	public void putMsg(AbstractExternalMsg msg) {
+		if (msg == null) {
+			return;
+		} else {
+			this.putMsg(msg.getMsgTypeID(), msg);
 		}
 	}
 }

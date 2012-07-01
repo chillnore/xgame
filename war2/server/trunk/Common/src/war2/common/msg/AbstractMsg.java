@@ -5,32 +5,18 @@ package war2.common.msg;
  * 
  * @author haijiang
  * @since 2012/6/3
- *
+ * 
  */
 public abstract class AbstractMsg {
-	/** 消息类型 */
-	private short _msgTypeID = 0;
 	/** 会话 ID */
-	private String _sessionID;
+	private long _sessionID;
 
 	/**
 	 * 获取消息类型 ID
 	 * 
 	 * @return
 	 */
-	public short getMsgTypeID() {
-		return this._msgTypeID;
-	}
-
-	/**
-	 * 设置消息类型
-	 * 
-	 * @param value
-	 * 
-	 */
-	void setMsgTypeID(short value) {
-		this._msgTypeID = value;
-	}
+	public abstract short getMsgTypeID();
 
 	/**
 	 * 获取会话 ID 
@@ -38,7 +24,7 @@ public abstract class AbstractMsg {
 	 * @return
 	 * 
 	 */
-	public String getSessionID() {
+	public long getSessionID() {
 		return this._sessionID;
 	}
 
@@ -48,7 +34,7 @@ public abstract class AbstractMsg {
 	 * @param value
 	 * 
 	 */
-	void setSessionID(String value) {
+	void setSessionID(long value) {
 		this._sessionID = value;
 	}
 }
