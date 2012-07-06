@@ -1,4 +1,4 @@
-package war2.sceneServer.entry.msg;
+package war2.sceneServer.modules.entry.msg;
 
 import org.json.JSONObject;
 
