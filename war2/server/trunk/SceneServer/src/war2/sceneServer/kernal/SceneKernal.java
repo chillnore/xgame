@@ -1,7 +1,6 @@
 package war2.sceneServer.kernal;
 
 import java.net.InetSocketAddress;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.mina.core.service.IoAcceptor;
@@ -13,9 +12,8 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import war2.common.msg.MINA_CodecFactory;
 import war2.common.msg.MsgJsonSerializer;
 import war2.common.msg.MsgQueueProcessor;
-import war2.common.utils.ClassPathScanHandler;
 import war2.common.utils.PackageUtil;
-import war2.common.utils.PackageUtil.IClazzNameFilter;
+import war2.common.utils.PackageUtil.IClazzFilter;
 
 /**
  * 网关服务器内核类
@@ -95,14 +93,13 @@ public class SceneKernal {
 			.getCodeSource()
 			.getLocation().getFile();
 
-		Set<Class<?>> ss = PackageUtil.listClazz(currLocation, true, new IClazzNameFilter() {
+		Set<Class<?>> ss = PackageUtil.listClazz(currLocation, true, new IClazzFilter() {
 			@Override
-			public boolean accept(String clazzName) {
-				if (clazzName == null || 
-					clazzName.isEmpty()) {
+			public boolean accept(Class<?> clazz) {
+				if (clazz == null) {
 					return false;
 				} else {
-					return clazzName.startsWith("war2.sceneServer.modules");
+					return clazz.getName().startsWith("war2.sceneServer.modules");
 				}
 			}
 		});

@@ -53,4 +53,25 @@ public class StringUtil {
 
 		return sb.toString();
 	}
+
+	/**
+	 * 清除源字符串左侧的字符串
+	 * 
+	 * @param src
+	 * @param start
+	 * @return 
+	 * 
+	 */
+	public static String trimLeft(String src, String start) {
+		if (src == null || 
+			src.isEmpty()) {
+			return "";
+		}
+
+		while (src.startsWith(start)) {
+			src = src.substring(start.length());
+		}
+
+		return src;
+	}
 }
