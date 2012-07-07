@@ -1,10 +1,8 @@
 package war2.sceneServer.kernal;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.InetSocketAddress;
-import java.net.URL;
-import java.util.Enumeration;
+import java.util.List;
+import java.util.Set;
 
 import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.core.session.IdleStatus;
@@ -12,12 +10,12 @@ import org.apache.mina.core.session.IoSessionConfig;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
-import war2.common.XgameError;
 import war2.common.msg.MINA_CodecFactory;
 import war2.common.msg.MsgJsonSerializer;
 import war2.common.msg.MsgQueueProcessor;
+import war2.common.utils.ClassPathScanHandler;
 import war2.common.utils.PackageUtil;
-import war2.common.utils.StringUtil;
+import war2.common.utils.PackageUtil.IClazzNameFilter;
 
 /**
  * 网关服务器内核类
@@ -78,11 +76,11 @@ public class SceneKernal {
 	 */
 	public void init() {
 		this.initAllGameModules();
-
-		// 创建消息处理器
-		this._msgQueueProc = new MsgQueueProcessor(
-			MSG_PROC_NAME, 
-			MsgActionMapBuilder.build());
+//
+//		// 创建消息处理器
+//		this._msgQueueProc = new MsgQueueProcessor(
+//			MSG_PROC_NAME, 
+//			MsgActionMapBuilder.build());
 	}
 
 	/**
@@ -90,8 +88,30 @@ public class SceneKernal {
 	 * 
 	 */
 	private void initAllGameModules() {
-		Object obj = PackageUtil.recursiveList("war2.sceneServer");
-		System.out.print(obj);
+		System.out.println("----");
+
+		String currLocation = this.getClass()
+			.getProtectionDomain()
+			.getCodeSource()
+			.getLocation().getFile();
+
+		Set<Class<?>> ss = PackageUtil.listClazz(currLocation, true, new IClazzNameFilter() {
+			@Override
+			public boolean accept(String clazzName) {
+				if (clazzName == null || 
+					clazzName.isEmpty()) {
+					return false;
+				} else {
+					return clazzName.startsWith("war2.sceneServer.modules");
+				}
+			}
+		});
+
+		if (ss != null) {
+			for (Class<?> s : ss) {
+				System.out.println(s.getName());
+			}
+		}
 	}
 
 	/**
