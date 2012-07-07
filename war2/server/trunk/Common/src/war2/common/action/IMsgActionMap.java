@@ -1,4 +1,6 @@
-package war2.common.msg;
+package war2.common.action;
+
+import war2.common.msg.AbstractMsg;
 
 /**
  * 消息活动字典

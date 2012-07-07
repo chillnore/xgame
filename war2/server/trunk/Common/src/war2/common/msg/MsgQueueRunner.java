@@ -4,6 +4,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import war2.common.XgameNullArgsError;
+import war2.common.action.IMsgAction;
+import war2.common.action.IMsgActionMap;
 
 /**
  * 消息队列运行器

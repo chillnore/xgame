@@ -1,10 +1,12 @@
-package war2.common.msg;
+package war2.common.action;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import war2.common.XgameInvalidArgsError;
 import war2.common.XgameNullArgsError;
+import war2.common.msg.AbstractMsg;
+import war2.common.msg.XgameMsgError;
 
 /**
  * 消息行为字典

@@ -1,7 +1,7 @@
 package war2.sceneServer.kernal;
 
-import war2.common.msg.IMsgActionMap;
-import war2.common.msg.MsgActionMap;
+import war2.common.action.IMsgActionMap;
+import war2.common.action.MsgActionMap;
 
 /**
  * 消息字典构建器

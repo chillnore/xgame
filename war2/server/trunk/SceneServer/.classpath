@@ -7,6 +7,6 @@
 	<classpathentry kind="lib" path="/Libraries/mina-core-2.0.4.jar"/>
 	<classpathentry kind="lib" path="/Libraries/slf4j-api-1.5.8.jar"/>
 	<classpathentry kind="lib" path="/Libraries/slf4j-nop-1.5.2.jar"/>
-	<classpathentry kind="lib" path="/SceneServer.Modules/bin"/>
+	<classpathentry kind="lib" path="/SceneServer.BizModules/bin"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

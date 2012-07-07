@@ -130,7 +130,7 @@ public class PackageUtil {
 			// 转换目录斜杠
 			clazzName = clazzName.replace('\\', '/');
 			// 清除开头的 /
-						clazzName = StringUtil.trimLeft(clazzName, "/");
+			clazzName = StringUtil.trimLeft(clazzName, "/");
 			// 将所有的 / 修改为 .
 			clazzName = StringUtil.join(clazzName.split("/"), ".");
 

@@ -55,21 +55,60 @@ public class StringUtil {
 	}
 
 	/**
-	 * 清除源字符串左侧的字符串
+	 * 清除源字符串左边的字符串
 	 * 
 	 * @param src
-	 * @param start
+	 * @param s
 	 * @return 
 	 * 
 	 */
-	public static String trimLeft(String src, String start) {
+	public static String trimLeft(String src, String s) {
 		if (src == null || 
 			src.isEmpty()) {
 			return "";
 		}
 
-		while (src.startsWith(start)) {
-			src = src.substring(start.length());
+		if (s == null || 
+			s.isEmpty()) {
+			return src;
+		}
+
+		if (src.equals(s)) {
+			return "";
+		}
+
+		while (src.startsWith(s)) {
+			src = src.substring(s.length());
+		}
+
+		return src;
+	}
+
+	/**
+	 * 清除源字符串右边的字符串
+	 * 
+	 * @param src
+	 * @param s
+	 * @return 
+	 * 
+	 */
+	public static String trimRight(String src, String s) {
+		if (src == null || 
+			src.isEmpty()) {
+			return "";
+		}
+
+		if (s == null || 
+			s.isEmpty()) {
+			return src;
+		}
+
+		if (src.equals(s)) {
+			return "";
+		}
+
+		while (src.endsWith(s)) {
+			src = src.substring(0, src.length() - s.length());
 		}
 
 		return src;

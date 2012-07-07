@@ -1,4 +1,6 @@
-package war2.common.msg;
+package war2.common.action;
+
+import war2.common.msg.AbstractMsg;
 
 /**
  * 消息行为, 向下调用 Service 类

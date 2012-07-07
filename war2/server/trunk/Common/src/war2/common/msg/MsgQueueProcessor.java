@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 import war2.common.XgameNullArgsError;
+import war2.common.action.IMsgActionMap;
 
 /**
  * 消息队列处理器

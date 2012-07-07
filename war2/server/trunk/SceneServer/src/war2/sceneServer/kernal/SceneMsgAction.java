@@ -2,9 +2,9 @@ package war2.sceneServer.kernal;
 
 import org.apache.mina.core.session.IoSession;
 
+import war2.common.action.IMsgAction;
 import war2.common.msg.AbstractExternalMsg;
 import war2.common.msg.AbstractMsg;
-import war2.common.msg.IMsgAction;
 
 /**
  * 网关消息处理器

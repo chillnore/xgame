@@ -9,9 +9,12 @@ import org.apache.mina.core.session.IoSessionConfig;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
+import war2.common.action.IMsgAction;
+import war2.common.msg.AbstractMsg;
 import war2.common.msg.MINA_CodecFactory;
 import war2.common.msg.MsgJsonSerializer;
 import war2.common.msg.MsgQueueProcessor;
+import war2.common.utils.ClazzUtil;
 import war2.common.utils.PackageUtil;
 import war2.common.utils.PackageUtil.IClazzFilter;
 
@@ -86,30 +89,31 @@ public class SceneKernal {
 	 * 
 	 */
 	private void initAllGameModules() {
-		System.out.println("----");
-
-		String currLocation = "";
-		
-		currLocation += this.getClass()
+		String currLocation = this.getClass()
 			.getProtectionDomain()
 			.getCodeSource()
-			.getLocation().getPath();
-		currLocation += "../../SceneServer.Modules/bin";
+			.getLocation().getFile() + "../../SceneServer.BizModules/bin/";
 
-		Set<Class<?>> ss = PackageUtil.listClazz(currLocation, true, new IClazzFilter() {
+		Set<Class<?>> clazzSet = PackageUtil.listClazz(currLocation, true, new IClazzFilter() {
 			@Override
 			public boolean accept(Class<?> clazz) {
 				if (clazz == null) {
 					return false;
 				} else {
-					return clazz.getName().startsWith("war2.sceneServer.modules");
+					return clazz.getName().startsWith("war2.sceneServer.bizModules");
 				}
 			}
 		});
 
-		if (ss != null) {
-			for (Class<?> s : ss) {
-				System.out.println(s.getName());
+		if (clazzSet != null) {
+			for (Class<?> clazz : clazzSet) {
+				if (ClazzUtil.isDrivedClass(clazz, AbstractMsg.class)) {
+					System.out.println(clazz.getName());
+				}
+
+				if (ClazzUtil.isDrivedClass(clazz, IMsgAction.class)) {
+					System.out.println(clazz.getName());
+				}
 			}
 		}
 	}
