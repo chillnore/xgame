@@ -1,5 +1,6 @@
 package war2.sceneServer.kernal;
 
+import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.util.Set;
 
@@ -10,13 +11,15 @@ import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
 import war2.common.XgameError;
+import war2.common.XgameNullArgsError;
+import war2.common.action.AbstractMsgActionMap;
 import war2.common.action.IMsgAction;
-import war2.common.action.MsgActionMap;
 import war2.common.msg.AbstractExternalMsg;
+import war2.common.msg.AbstractMsg;
+import war2.common.msg.AbstractMsgMap;
 import war2.common.msg.MINA_CodecFactory;
 import war2.common.msg.MsgJsonSerializer;
-import war2.common.msg.MsgMap;
-import war2.common.msg.MsgQueueProcessor;
+import war2.common.msg.AsyncMsgQueueProcessor;
 import war2.common.utils.ClazzUtil;
 import war2.common.utils.PackageUtil;
 import war2.common.utils.PackageUtil.IClazzFilter;
@@ -39,11 +42,11 @@ public class SceneKernal {
 	/** 对象实例 */
 	private static volatile SceneKernal _instance = null;
 	/** 消息处理器 */
-	private MsgQueueProcessor _msgQueueProc = null;
+	private AsyncMsgQueueProcessor _msgQueueProc = null;
 	/** 消息字典 */
-	private MsgMap _msgMap = new MsgMap();
+	private AbstractMsgMap _msgMap = AbstractMsgMap.newDefault();
 	/** 消息行为字典 */
-	private MsgActionMap _msgActionMap = new MsgActionMap();
+	private AbstractMsgActionMap _msgActionMap = AbstractMsgActionMap.newDefault();
 
 	/**
 	 * 类默认构造器
@@ -76,7 +79,7 @@ public class SceneKernal {
 	 * @return 
 	 * 
 	 */
-	public MsgQueueProcessor getMsgQueueProcessor() {
+	public AsyncMsgQueueProcessor getMsgQueueProcessor() {
 		return this._msgQueueProc;
 	}
 
@@ -95,7 +98,6 @@ public class SceneKernal {
 	 * 初始化场景业务模块
 	 * 
 	 */
-	@SuppressWarnings("unchecked")
 	private void initSceneBizModules() {
 		// 获取当前应用目录
 		String sceneBizModulesDir = this.getSceneBizModulesDir();
@@ -111,17 +113,25 @@ public class SceneKernal {
 			return;
 		}
 
-		for (Class<?> clazz : clazzSet) {
-			if (ClazzUtil.isConcreteDrivedClass(clazz, AbstractExternalMsg.class)) {
+		for (Class<?> currClazz : clazzSet) {
+			if (ClazzUtil.isConcreteDrivedClass(
+				currClazz, 
+				AbstractExternalMsg.class)) {
 				// 如果是消息类, 
 				// 则注册到消息字典
-				this.registerMsg((Class<AbstractExternalMsg>)clazz);
+				@SuppressWarnings("unchecked")
+				Class<? extends AbstractExternalMsg> msgClazz = (Class<AbstractExternalMsg>)currClazz;
+				this.registerMsg(msgClazz);
 			}
 
-			if (ClazzUtil.isConcreteDrivedClass(clazz, IMsgAction.class)) {
+			if (ClazzUtil.isConcreteDrivedClass(
+				currClazz, 
+				IMsgAction.class)) {
 				// 如果是行为类, 
 				// 则注册到行为字典
-				this.registerMsgAction((Class<IMsgAction<?>>)clazz);
+				@SuppressWarnings("unchecked")
+				Class<? extends IMsgAction<?>> msgActionClazz = (Class<IMsgAction<?>>)currClazz;
+				this.registerMsgAction(msgActionClazz);
 			}
 		}
 	}
@@ -132,7 +142,7 @@ public class SceneKernal {
 	 */
 	private void initMsgQueueProc() {
 		// 创建消息处理器
-		this._msgQueueProc = new MsgQueueProcessor(MSG_PROC_NAME, this._msgActionMap);
+		this._msgQueueProc = new AsyncMsgQueueProcessor(MSG_PROC_NAME, this._msgActionMap);
 	}
 
 	/**
@@ -162,7 +172,7 @@ public class SceneKernal {
 			// 创建消息实例
 			AbstractExternalMsg msgObj = clazz.newInstance();
 			// 添加消息到字典
-			this._msgMap.putMsg(msgObj);
+			this._msgMap.putMsg(msgObj.getMsgTypeID(), msgObj);
 		} catch (Exception ex) {
 			// 抛出异常
 			throw new XgameError(ex);
@@ -184,7 +194,57 @@ public class SceneKernal {
 			// 创建消息行为对象
 			IMsgAction<?> msgActionObj = clazz.newInstance();
 			// 添加消息行为到字典
-			this._msgActionMap.putMsgAction(msgActionObj);
+			this._msgActionMap.putMsgAction(getMsgTypeID(msgActionObj), msgActionObj);
+		} catch (Exception ex) {
+			// 抛出异常
+			throw new XgameError(ex);
+		}
+	}
+
+	/**
+	 * 从消息行为中获取消息类型 ID 
+	 * 
+	 * @param action
+	 * @return
+	 * 
+	 */
+	private static short getMsgTypeID(IMsgAction<?> action) {
+		if (action == null) {
+			throw new XgameNullArgsError("action");
+		}
+
+		// 获取行为类
+		Class<?> actionClazz = action.getClass();
+		
+		// 获取 execute 方法
+		Method executeMethod = ClazzUtil.getMethod(
+			"execute", actionClazz);
+
+		if (executeMethod == null) {
+			// 如果找不到 execute 函数, 
+			// 则直接抛出异常!
+			throw new XgameError(
+				"Can not find execute method in " + 
+				actionClazz.getName());
+		}
+
+		// 获取第一个参数类
+		@SuppressWarnings("unchecked")
+		Class<? extends AbstractMsg> msgClazz = (Class<AbstractMsg>)executeMethod.getParameterTypes()[0];
+
+		if (msgClazz == null) {
+			// 如果找不到参数类型, 
+			// 则直接抛出异常!
+			throw new XgameError(
+				"Can not find params[0] type in " + 
+				actionClazz.getName() + "." + executeMethod.getName());
+		}
+
+		try {
+			// 创建消息类对象
+			AbstractMsg msgObj = msgClazz.newInstance();
+			// 获取消息类型 ID
+			return msgObj.getMsgTypeID();
 		} catch (Exception ex) {
 			// 抛出异常
 			throw new XgameError(ex);

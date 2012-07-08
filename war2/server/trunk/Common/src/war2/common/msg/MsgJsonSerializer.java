@@ -22,7 +22,7 @@ public class MsgJsonSerializer implements IMsgSerializer {
 	public static final String PLAYER_ID = "playerID";
 
 	/** 消息字典 */
-	private IMsgMap _msgMap;
+	private AbstractMsgMap _msgMap;
 
 	/**
 	 * 类参数构造器
@@ -31,7 +31,7 @@ public class MsgJsonSerializer implements IMsgSerializer {
 	 * @throws XgameNullArgsError if msgMap == null 
 	 * 
 	 */
-	public MsgJsonSerializer(IMsgMap msgMap) {
+	public MsgJsonSerializer(AbstractMsgMap msgMap) {
 		if (msgMap == null) {
 			throw new XgameNullArgsError("msgMap");
 		}
