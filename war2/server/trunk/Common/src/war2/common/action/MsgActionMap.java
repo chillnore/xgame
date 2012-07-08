@@ -1,12 +1,15 @@
 package war2.common.action;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import war2.common.XgameError;
 import war2.common.XgameInvalidArgsError;
 import war2.common.XgameNullArgsError;
 import war2.common.msg.AbstractMsg;
 import war2.common.msg.XgameMsgError;
+import war2.common.utils.ClazzUtil;
 
 /**
  * 消息行为字典
@@ -59,4 +62,68 @@ public class MsgActionMap implements IMsgActionMap {
 		this._innerMap.put(msgTypeID, action);
 	}
 
+	/**
+	 * 添加消息行为
+	 * 
+	 * @param action
+	 * 
+	 */
+	public void putMsgAction(
+		IMsgAction<? extends AbstractMsg> action) {
+
+		if (action == null) {
+			return;
+		} else {
+			this.putMsgAction(getMsgTypeID(action), action);
+		}
+	}
+
+	/**
+	 * 从消息行为中获取消息类型 ID 
+	 * 
+	 * @param action
+	 * @return
+	 * 
+	 */
+	private static short getMsgTypeID(IMsgAction<?> action) {
+		if (action == null) {
+			throw new XgameNullArgsError("action");
+		}
+
+		// 获取行为类
+		Class<?> actionClazz = action.getClass();
+		
+		// 获取 execute 方法
+		Method executeMethod = ClazzUtil.getMethod(
+			"execute", actionClazz);
+
+		if (executeMethod == null) {
+			// 如果找不到 execute 函数, 
+			// 则直接抛出异常!
+			throw new XgameError(
+				"Can not find execute method in " + 
+				actionClazz.getName());
+		}
+
+		// 获取第一个参数类
+		Class<?> msgClazz = executeMethod.getParameterTypes()[0];
+
+		if (msgClazz == null) {
+			// 如果找不到参数类型, 
+			// 则直接抛出异常!
+			throw new XgameError(
+				"Can not find params[0] type in " + 
+				actionClazz.getName() + "." + executeMethod.getName());
+		}
+
+		try {
+			// 创建消息类对象
+			AbstractMsg msgObj = (AbstractMsg)msgClazz.newInstance();
+			// 获取消息类型 ID
+			return msgObj.getMsgTypeID();
+		} catch (Exception ex) {
+			// 抛出异常
+			throw new XgameError(ex);
+		}
+	}
 }
