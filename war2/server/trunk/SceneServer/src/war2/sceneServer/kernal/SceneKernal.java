@@ -17,9 +17,9 @@ import war2.common.action.IMsgAction;
 import war2.common.msg.AbstractExternalMsg;
 import war2.common.msg.AbstractMsg;
 import war2.common.msg.AbstractMsgMap;
+import war2.common.msg.AsyncMsgQueueProcessor;
 import war2.common.msg.MINA_CodecFactory;
 import war2.common.msg.MsgJsonSerializer;
-import war2.common.msg.MsgQueueProcessor;
 import war2.common.utils.ClazzUtil;
 import war2.common.utils.PackageUtil;
 import war2.common.utils.PackageUtil.IClazzFilter;
@@ -42,7 +42,7 @@ public class SceneKernal {
 	/** 对象实例 */
 	private static volatile SceneKernal _instance = null;
 	/** 消息处理器 */
-	private MsgQueueProcessor _msgQueueProc = null;
+	private AsyncMsgQueueProcessor _msgQueueProc = null;
 	/** 消息字典 */
 	private AbstractMsgMap _msgMap = AbstractMsgMap.newDefault();
 	/** 消息行为字典 */
@@ -79,7 +79,7 @@ public class SceneKernal {
 	 * @return 
 	 * 
 	 */
-	public MsgQueueProcessor getMsgQueueProcessor() {
+	public AsyncMsgQueueProcessor getMsgQueueProcessor() {
 		return this._msgQueueProc;
 	}
 
@@ -142,7 +142,7 @@ public class SceneKernal {
 	 */
 	private void initMsgQueueProc() {
 		// 创建消息处理器
-		this._msgQueueProc = new MsgQueueProcessor(MSG_PROC_NAME, this._msgActionMap);
+		this._msgQueueProc = new AsyncMsgQueueProcessor(MSG_PROC_NAME, this._msgActionMap);
 	}
 
 	/**

@@ -8,15 +8,15 @@ import war2.common.XgameNullArgsError;
 import war2.common.action.AbstractMsgActionMap;
 
 /**
- * 消息队列处理器
+ * 异步消息队列处理器
  * 
  * @author Haijiang
  * @since 2012/6/3 
  * 
  */
-public class MsgQueueProcessor implements IMsgProcessor {
+public class AsyncMsgQueueProcessor implements IMsgProcessor {
 	/** 消息队列运行器 */
-	private MsgQueueRunner _runner;
+	private AsyncMsgQueueRunner _runner;
 
 	/**
 	 * 类参数构造器
@@ -27,7 +27,7 @@ public class MsgQueueProcessor implements IMsgProcessor {
 	 * @throws XgameNullArgsError if msgActionMap == null 
 	 * 
 	 */
-	public MsgQueueProcessor(String name, AbstractMsgActionMap msgActionMap) {
+	public AsyncMsgQueueProcessor(String name, AbstractMsgActionMap msgActionMap) {
 		if (name == null || name.isEmpty()) {
 			throw new XgameNullArgsError("name");
 		}
@@ -44,7 +44,7 @@ public class MsgQueueProcessor implements IMsgProcessor {
 		// 设置线程名称
 		nf.putCurrName(name);
 		// 创建运行器
-		this._runner = new MsgQueueRunner(msgActionMap);
+		this._runner = new AsyncMsgQueueRunner(msgActionMap);
 		// 开启消息线程
 		execServ.submit(this._runner);
 	}
