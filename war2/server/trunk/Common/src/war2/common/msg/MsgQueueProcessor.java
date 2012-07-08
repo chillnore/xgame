@@ -5,7 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 import war2.common.XgameNullArgsError;
-import war2.common.action.IMsgActionMap;
+import war2.common.action.AbstractMsgActionMap;
 
 /**
  * 消息队列处理器
@@ -27,7 +27,7 @@ public class MsgQueueProcessor implements IMsgProcessor {
 	 * @throws XgameNullArgsError if msgActionMap == null 
 	 * 
 	 */
-	public MsgQueueProcessor(String name, IMsgActionMap msgActionMap) {
+	public MsgQueueProcessor(String name, AbstractMsgActionMap msgActionMap) {
 		if (name == null || name.isEmpty()) {
 			throw new XgameNullArgsError("name");
 		}

@@ -5,7 +5,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import war2.common.XgameNullArgsError;
 import war2.common.action.IMsgAction;
-import war2.common.action.IMsgActionMap;
+import war2.common.action.AbstractMsgActionMap;
 
 /**
  * 消息队列运行器
@@ -18,7 +18,7 @@ final class MsgQueueRunner implements Runnable {
 	/** 消息队列 */
 	private BlockingQueue<AbstractMsg> _msgQueue;
 	/** 消息行为字典 */
-	private IMsgActionMap _msgActionMap;
+	private AbstractMsgActionMap _msgActionMap;
 
 	/**
 	 * 类参数构造器
@@ -27,7 +27,7 @@ final class MsgQueueRunner implements Runnable {
 	 * @throws XgameNullArgsError if msgActionMap == null
 	 * 
 	 */
-	public MsgQueueRunner(IMsgActionMap msgActionMap) {
+	public MsgQueueRunner(AbstractMsgActionMap msgActionMap) {
 		if (msgActionMap == null) {
 			throw new XgameNullArgsError("msgActionMap");
 		}

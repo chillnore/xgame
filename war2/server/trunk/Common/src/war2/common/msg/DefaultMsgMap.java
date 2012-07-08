@@ -15,7 +15,7 @@ import war2.common.XgameNullArgsError;
  * @version $Rev: 0 $
  * 
  */
-public class MsgMap implements IMsgMap {
+class DefaultMsgMap extends AbstractMsgMap {
 	/** 消息类型字典 */
 	private Map<Short, AbstractExternalMsg> _msgMap;
 
@@ -23,7 +23,7 @@ public class MsgMap implements IMsgMap {
 	 * 类默认构造器
 	 * 
 	 */
-	public MsgMap() {
+	public DefaultMsgMap() {
 		this._msgMap = new HashMap<Short, AbstractExternalMsg>();
 	}
 
@@ -55,13 +55,5 @@ public class MsgMap implements IMsgMap {
 
 		// 设置消息
 		this._msgMap.put(msgTypeID, msg);
-	}
-
-	public void putMsg(AbstractExternalMsg msg) {
-		if (msg == null) {
-			return;
-		} else {
-			this.putMsg(msg.getMsgTypeID(), msg);
-		}
 	}
 }
