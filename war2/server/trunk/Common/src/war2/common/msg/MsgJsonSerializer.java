@@ -18,6 +18,8 @@ public class MsgJsonSerializer implements IMsgSerializer {
 	public static final String MSG_TYPE_ID = "msgTypeID";
 	/** MsgBody */
 	public static final String MSG_BODY = "msgBody";
+	/** 玩家 ID */
+	public static final String PLAYER_ID = "playerID";
 
 	/** 消息字典 */
 	private IMsgMap _msgMap;
