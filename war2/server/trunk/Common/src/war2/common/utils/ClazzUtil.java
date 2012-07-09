@@ -2,9 +2,6 @@ package war2.common.utils;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * 类实用工具
@@ -35,67 +32,14 @@ public class ClazzUtil {
 		if (clazzA == null || 
 			clazzB == null) {
 			return false;
-		}
-
-		if (clazzA.equals(clazzB)) {
+		} else if (clazzA.equals(clazzB)) {
 			// 类自己不能作为自己的派生类, 
 			// 所以返回 false
 			return false;
+		} else {
+			// 判断 A 是否为 B 的派生类
+			return clazzB.isAssignableFrom(clazzA);
 		}
-
-		// 类队列
-		Queue<Class<?>> cq = new LinkedList<Class<?>>();
-		// 父类
-		Class<?> superClazz;
-		// 接口数组
-		Class<?>[] interfaceArray;
-
-		// 获取父类
-		superClazz = clazzA.getSuperclass();
-
-		if (superClazz != null) {
-			// 将父类入队
-			cq.add(superClazz);
-		}
-
-		// 获取接口数组
-		interfaceArray = clazzA.getInterfaces();
-
-		if (interfaceArray != null && 
-			interfaceArray.length > 0) {
-			// 将接口数组入队
-			cq.addAll(Arrays.asList(interfaceArray));
-		}
-
-		while (!cq.isEmpty()) {
-			// 获取父类
-			Class<?> currClazz = cq.poll();
-			
-			if (currClazz.equals(clazzB)) {
-				// 如果父类与参数中给定的超类相同, 
-				// 那么返回 true
-				return true;
-			}
-
-			// 继续查找父类
-			superClazz = currClazz.getSuperclass();
-
-			if (superClazz != null) {
-				// 将父类入队
-				cq.add(superClazz);
-			}
-
-			// 获取接口数组
-			interfaceArray = currClazz.getInterfaces();
-
-			if (interfaceArray != null && 
-				interfaceArray.length > 0) {
-				// 将接口数组入队
-				cq.addAll(Arrays.asList(interfaceArray));
-			}
-		}
-
-		return false;
 	}
 
 	/**
