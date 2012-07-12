@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<project basedir="." default="build" name="gameServer">
+	<!--// import //-->
+	<import file="../../Common/make/ant-jarOneProj.xml" />
+
+	<!--// 目标项目 //-->
+	<path id="targetProj" location="${basedir}/.." />
+
+	<!--// 引用包目录 //-->
+	<path id="gameServer.libs">
+		<pathelement location="${libsDir}/antlr-2.7.6.jar"/>
+		<pathelement location="${libsDir}/commons-collections-3.2.1.jar"/>
+		<pathelement location="${libsDir}/dom4j-1.6.1.jar"/>
+		<pathelement location="${libsDir}/h2-1.3.161.jar"/>
+		<pathelement location="${libsDir}/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
+		<pathelement location="${libsDir}/hibernate3.jar"/>
+		<pathelement location="${libsDir}/javassist-3.9.0.GA.jar"/>
+		<pathelement location="${libsDir}/json-1.0.0.jar"/>
+		<pathelement location="${libsDir}/jta-1.1.jar"/>
+		<pathelement location="${libsDir}/log4j-1.2.16.jar"/>
+		<pathelement location="${libsDir}/mina-core-2.0.4.jar"/>
+		<pathelement location="${libsDir}/mysql-connector-java-5.1.18-bin.jar"/>
+		<pathelement location="${libsDir}/simple-xml-2.6.2.jar"/>
+		<pathelement location="${libsDir}/slf4j-api-1.5.8.jar"/>
+		<pathelement location="${libsDir}/slf4j-nop-1.5.2.jar"/>
+    </path>
+
+	<!--// 构建当前项目 //-->
+	<target name="build">
+		<jarOneProj targetProj="targetProj" targetVer="${targetVer}" 
+			libs="gameServer.libs" />
+	</target>
+
+</project>

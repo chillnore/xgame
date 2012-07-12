@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<project basedir=".">
+
+	<!--// 导入全局配置 //-->
+	<import file="./ant-globals.xml" />
+
+	<!--// 空目录 //-->
+	<path id="__EMPTY_PATH__" />
+
+	<!--//
+		// 宏定义 : 构建并打包 jar
+		// 
+		// @param targetProj 
+		// @param targetVer 
+		// @param libs 
+		// @param relativeProjs 
+		// @param javaVer 
+		// @param charEncoding 
+		// 
+		//-->
+	<macrodef name="jarOneProj">
+		<!--// 目标项目 //-->
+		<attribute name="targetProj" />
+		<!--// 目标版本号 //-->
+		<attribute name="targetVer" />
+		<!--// 依赖包 jar 文件 //-->
+		<attribute name="libs" />
+		<!--// 相关项目 //-->
+		<attribute name="relativeProjs" default="__EMPTY_PATH__" />
+		<!--// java 编译器版本 //-->
+		<attribute name="javaVer" default="1.6" />
+		<!--// 字符编码 //-->
+		<attribute name="charEncoding" default="utf-8" />
+
+		<sequential>
+			<!--// 
+				// 0. 先清理目录;
+				// 1. 构建相关项目, 调用相关项目下的 xbuild.xml 文件;
+				// 2. 构建当前项目;
+				// 3. 复制 META-INF 目录;
+				// 4. 打包成 jar 文件;
+				// 
+				//-->
+			<!--// 设置目标项目目录 //-->
+			<property name="targetPath" refid="@{targetProj}" />
+			
+			<!--// 0. 先清理目录 //-->
+			<echo>:: 清理名录: ${targetPath}/build/out</echo>
+			<deltree dir="${targetPath}/build/out" />
+			<mkdir dir="${targetPath}/build/out" />
+			<mkdir dir="${targetPath}/build/out/libs" />
+			<mkdir dir="${targetPath}/build/out/classes" />
+			<mkdir dir="${targetPath}/build/out/jar" />
+
+			<!--// 1. 构建相关项目 //-->
+			<property name="__targetPath__" value="${targetPath}/build/out/libs" />
+			<foreach target="jarRelativeProjAndCopy"
+				delimiter=","
+				param="relativeProj" 
+				inheritall="true">
+				<path refid="@{relativeProjs}" />
+			</foreach>
+
+			<!--// 2. 构建 java 源文件 //-->
+			<echo>:: 构建当前项目: ${targetPath}"</echo>
+			<javac debug="true"
+				destdir="${targetPath}/build/out/classes" 
+				source="@{javaVer}" 
+				target="@{javaVer}" 
+				encoding="utf-8">
+				<src path="${targetPath}/src" />
+				<classpath refid="@{libs}" />
+				<classpath>
+					<fileset dir="${targetPath}/build/out/libs">
+						<include name="*.jar" />
+					</fileset>
+				</classpath>
+			</javac>
+
+			<!--// 3. 拷贝 META-INF 目录 //-->
+			<echo>:: 拷贝 META-INF</echo>
+			<echo>:: from : ${targetPath}/src</echo>
+			<echo>::   to : ${targetPath}/build/out/classes</echo>
+			<copy todir="${targetPath}/build/out/classes">
+				<fileset dir="${targetPath}/src">
+					<include name="META-INF/*.*" />
+				</fileset>
+			</copy>
+
+			<!--// 4. 打包成 jar 文件 //-->
+			<propertyregex property="targetPath_shortName" 
+				input="${targetPath}" 
+				regexp="/([^/]*?)$" select="\1" />
+
+			<property name="jarFilePath" 
+				value="${targetPath}/build/out/jar/${targetPath_shortName}-@{targetVer}.jar" />
+
+			<echo>:: 打包 jar 文件: ${jarFilePath}</echo>
+			<jar destfile="${jarFilePath}">
+				<fileset dir="${targetPath}/build/out/classes">
+					<include name="**/*.*" />
+				</fileset>
+			</jar>
+		</sequential>
+	</macrodef>
+
+	<!--// 
+		// 构建相关项目, 并复制 jar 文件
+		// 
+		// @param relativeProj 
+		// @param jarOneProj_curr 
+		// 
+		//-->
+	<target name="jarRelativeProjAndCopy">
+		<!--// 构建并打包相关项目 //-->
+		<echo>:: 构建相关项目: ${relativeProj}</echo>
+		<ant antfile="${relativeProj}/build/xbuild-jar.xml" 
+			target="build" 
+			inheritall="false"/>
+
+		<!--// 拷贝 jar 文件 //-->
+		<echo>:: 拷贝 jar 文件到: ${__targetPath__}</echo>
+		<copy todir="${__targetPath__}">
+			<fileset dir="${relativeProj}/build/out/libs">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${relativeProj}/build/out/jar">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+</project>
