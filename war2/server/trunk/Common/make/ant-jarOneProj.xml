@@ -2,7 +2,7 @@
 <project basedir=".">
 
 	<!--// 导入全局配置 //-->
-	<import file="./ant-globals.xml" />
+	<import file="./ant-globalsConfig.xml" />
 
 	<!--// 空目录 //-->
 	<path id="__EMPTY_PATH__" />
@@ -43,17 +43,19 @@
 				//-->
 			<!--// 设置目标项目目录 //-->
 			<property name="targetPath" refid="@{targetProj}" />
+
+			<!--// ant 构建所用临时目录 //-->
+			<property name="antMakeTempDir0" value="${targetPath}/make/ant" />
 			
 			<!--// 0. 先清理目录 //-->
 			<echo>:: 清理名录: ${targetPath}/build/out</echo>
-			<deltree dir="${targetPath}/build/out" />
-			<mkdir dir="${targetPath}/build/out" />
-			<mkdir dir="${targetPath}/build/out/libs" />
-			<mkdir dir="${targetPath}/build/out/classes" />
-			<mkdir dir="${targetPath}/build/out/jar" />
+			<deltree dir="${antMakeTempDir0}" />
+			<mkdir dir="${antMakeTempDir0}/libs" />
+			<mkdir dir="${antMakeTempDir0}/classes" />
+			<mkdir dir="${antMakeTempDir0}/jar" />
 
 			<!--// 1. 构建相关项目 //-->
-			<property name="__targetPath__" value="${targetPath}/build/out/libs" />
+			<property name="__targetPath__" value="${antMakeTempDir0}/libs" />
 			<foreach target="jarRelativeProjAndCopy"
 				delimiter=","
 				param="relativeProj" 
@@ -64,14 +66,14 @@
 			<!--// 2. 构建 java 源文件 //-->
 			<echo>:: 构建当前项目: ${targetPath}"</echo>
 			<javac debug="true"
-				destdir="${targetPath}/build/out/classes" 
+				destdir="${antMakeTempDir0}/classes" 
 				source="@{javaVer}" 
 				target="@{javaVer}" 
 				encoding="utf-8">
 				<src path="${targetPath}/src" />
 				<classpath refid="@{libs}" />
 				<classpath>
-					<fileset dir="${targetPath}/build/out/libs">
+					<fileset dir="${antMakeTempDir0}/libs">
 						<include name="*.jar" />
 					</fileset>
 				</classpath>
@@ -81,7 +83,7 @@
 			<echo>:: 拷贝 META-INF</echo>
 			<echo>:: from : ${targetPath}/src</echo>
 			<echo>::   to : ${targetPath}/build/out/classes</echo>
-			<copy todir="${targetPath}/build/out/classes">
+			<copy todir="${antMakeTempDir0}/classes">
 				<fileset dir="${targetPath}/src">
 					<include name="META-INF/*.*" />
 				</fileset>
@@ -93,11 +95,11 @@
 				regexp="/([^/]*?)$" select="\1" />
 
 			<property name="jarFilePath" 
-				value="${targetPath}/build/out/jar/${targetPath_shortName}-@{targetVer}.jar" />
+				value="${antMakeTempDir0}/jar/${targetPath_shortName}-@{targetVer}.jar" />
 
 			<echo>:: 打包 jar 文件: ${jarFilePath}</echo>
 			<jar destfile="${jarFilePath}">
-				<fileset dir="${targetPath}/build/out/classes">
+				<fileset dir="${antMakeTempDir0}/classes">
 					<include name="**/*.*" />
 				</fileset>
 			</jar>
@@ -114,17 +116,22 @@
 	<target name="jarRelativeProjAndCopy">
 		<!--// 构建并打包相关项目 //-->
 		<echo>:: 构建相关项目: ${relativeProj}</echo>
-		<ant antfile="${relativeProj}/build/xbuild-jar.xml" 
+
+		<!--// 调用相关项目的 ant-buildJar.xml //-->
+		<ant antfile="${relativeProj}/make/ant-buildJar.xml" 
 			target="build" 
 			inheritall="false"/>
+
+		<!--// ant 构建所用临时目录 //-->
+		<property name="antMakeTempDir1" value="${relativeProj}/make/ant" />
 
 		<!--// 拷贝 jar 文件 //-->
 		<echo>:: 拷贝 jar 文件到: ${__targetPath__}</echo>
 		<copy todir="${__targetPath__}">
-			<fileset dir="${relativeProj}/build/out/libs">
+			<fileset dir="${antMakeTempDir1}/libs">
 				<include name="*.jar" />
 			</fileset>
-			<fileset dir="${relativeProj}/build/out/jar">
+			<fileset dir="${antMakeTempDir1}/jar">
 				<include name="*.jar" />
 			</fileset>
 		</copy>
