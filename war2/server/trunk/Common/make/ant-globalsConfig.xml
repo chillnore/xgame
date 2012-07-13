@@ -14,7 +14,7 @@
 		// 存放所有项目所依赖的 jar 文件!
 		// 
 		//-->
-	<property name="libsDir" value="../../Libraries" />
+	<property name="LIBS_DIR" value="../../Libraries" />
 
 	<!--//
 		// 版本号
@@ -22,5 +22,5 @@
 		// xxx-${targetVer}.jar
 		// 
 		//-->
-	<property name="targetVer" value="0.0.1-SNAPSHOT" />
+	<property name="targetVer" value="0.0.1-Snapshot" />
 </project>
