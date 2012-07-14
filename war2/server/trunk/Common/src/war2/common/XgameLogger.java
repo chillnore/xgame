@@ -43,6 +43,21 @@ public class XgameLogger {
 	}
 
 	/**
+	 * 记录 Warning 级别的消息
+	 * 
+	 * @param msg 
+	 * 
+	 */
+	public void logWarn(String msg) {
+		if (msg == null || 
+			msg.isEmpty()) {
+			return;
+		}
+
+		this.getLogger().warn(msg);
+	}
+
+	/**
 	 * 记录错误信息
 	 * 
 	 * @param msg

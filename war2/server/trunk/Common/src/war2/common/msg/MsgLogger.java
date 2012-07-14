@@ -28,7 +28,7 @@ public class MsgLogger extends XgameLogger {
 	 */
 	public static MsgLogger getInstance() {
 		if (_theInstance == null) {
-			synchronized (XgameLogger.class) {
+			synchronized (MsgLogger.class) {
 				if (_theInstance == null) {
 					_theInstance = new MsgLogger();
 				}

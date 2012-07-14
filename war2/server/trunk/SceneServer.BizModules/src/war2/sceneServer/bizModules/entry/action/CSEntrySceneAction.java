@@ -11,6 +11,6 @@ import war2.sceneServer.kernal.SceneMsgAction;
  */
 public class CSEntrySceneAction extends SceneMsgAction<CSEntryScene> {
 	@Override
-	public void execute(CSEntryScene msg) {	
+	public void execute(CSEntryScene msg) {
 	}
 }
