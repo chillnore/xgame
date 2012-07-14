@@ -61,7 +61,14 @@ final class AsyncMsgQueueRunner implements Runnable {
 					// 则直接跳过并处理下一个消息
 					continue;
 				}
-				
+
+				if (msg.getMsgTypeID() == AbstractInternalMsg.INTERNAL_MSG_TYPE_ID) {
+					// 如果当前消息是内部消息, 
+					// 则调用自执行函数
+					((AbstractInternalMsg)msg).execute();
+					continue;
+				}
+
 				// 记录日志消息
 				logInfo("MsgQueueProcessor[@name='" + Thread.currentThread().getName() + "']$MsgQueueRunner#run >> take : " + msg.getClass().getSimpleName());
 
