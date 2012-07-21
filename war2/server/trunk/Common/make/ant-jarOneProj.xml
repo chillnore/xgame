@@ -82,7 +82,7 @@
 			<!--// 3. 拷贝 META-INF 目录 //-->
 			<echo>:: 拷贝 META-INF</echo>
 			<echo>:: from : ${targetPath}/src</echo>
-			<echo>::   to : ${targetPath}/build/out/classes</echo>
+			<echo>::   to : ${targetPath}/ant/classes</echo>
 			<copy todir="${antMakeTempDir0}/classes">
 				<fileset dir="${targetPath}/src">
 					<include name="META-INF/*.*" />
@@ -90,9 +90,24 @@
 			</copy>
 
 			<!--// 4. 打包成 jar 文件 //-->
-			<propertyregex property="targetPath_shortName" 
-				input="${targetPath}" 
-				regexp="/([^/]*?)$" select="\1" />
+			<if>
+				<equals arg1="${file.separator}" arg2="\" />
+				<then>
+					<!--// Windows 系统 //-->
+					<propertyregex property="targetPath_shortName" 
+						input="${targetPath}" 
+						regexp="\\([^\\]*?)$" select="\1" />
+				</then>
+			<elseif>
+				<equals arg1="${file.separator}" arg2="/" />
+				<then>
+					<!--// Unix 系统 //-->
+					<propertyregex property="targetPath_shortName" 
+						input="${targetPath}" 
+						regexp="/([^/]*?)$" select="\1" />
+				</then>
+			</elseif>
+			</if>
 
 			<property name="jarFilePath" 
 				value="${antMakeTempDir0}/jar/${targetPath_shortName}-@{targetVer}.jar" />

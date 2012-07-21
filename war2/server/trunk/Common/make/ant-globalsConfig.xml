@@ -5,6 +5,7 @@
 		// 需要使用 ant-contrib-xxx.jar 包, 
 		// 如果 ant 环境中没有, 
 		// 则需要下载并复制到 ant 安装目录下的 lib 目录中!
+		// 注意还需要调整 Eclipse 中的 ANT 设置
 		// 
 		//-->
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
