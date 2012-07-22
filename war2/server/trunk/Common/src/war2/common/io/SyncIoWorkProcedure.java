@@ -6,16 +6,16 @@ package war2.common.io;
  * @author haijiang
  *
  */
-class SyncIoWorkProc implements IIoWorkProc<IIoWork> {
+class SyncIoWorkProcedure<E extends Enum<E>> implements IIoWorkProcedure<IIoWork, E> {
 	@Override
-	public void startWork(IIoWork work) {
+	public void startWork(IIoWork work, E threadEnum) {
 		if (work == null) {
 			return;
 		}
 
 		// 将异步操作包装成一个有状态的对象, 
 		// 然后带入 callInit, callAsyncProc, callFinish 等函数中!
-		this.nextStep(new StatefulIoWork(work));
+		this.nextStep(new StatefulIoWork<E>(work, threadEnum));
 	}
 
 	/**
@@ -23,7 +23,7 @@ class SyncIoWorkProc implements IIoWorkProc<IIoWork> {
 	 * 
 	 * @param work
 	 */
-	private void callInit(StatefulIoWork work) {
+	private void callInit(StatefulIoWork<E> work) {
 		if (work == null) {
 			return;
 		}
@@ -37,7 +37,7 @@ class SyncIoWorkProc implements IIoWorkProc<IIoWork> {
 	 * 
 	 * @param work
 	 */
-	private void callAsyncProc(StatefulIoWork work) {
+	private void callAsyncProc(StatefulIoWork<E> work) {
 		if (work == null) {
 			return;
 		}
@@ -51,7 +51,7 @@ class SyncIoWorkProc implements IIoWorkProc<IIoWork> {
 	 * 
 	 * @param work
 	 */
-	private void callFinish(StatefulIoWork work) {
+	private void callFinish(StatefulIoWork<E> work) {
 		if (work == null) {
 			return;
 		}
@@ -64,7 +64,7 @@ class SyncIoWorkProc implements IIoWorkProc<IIoWork> {
 	 * 
 	 * @param work
 	 */
-	private void nextStep(StatefulIoWork work) {
+	private void nextStep(StatefulIoWork<E> work) {
 		if (work == null) {
 			return;
 		}

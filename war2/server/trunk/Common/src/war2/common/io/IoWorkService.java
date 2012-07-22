@@ -11,41 +11,44 @@ import war2.common.msg.IMsgProcessor;
  * @author haijiang
  * 
  */
-public class IoWorkService {
+public class IoWorkService<E extends Enum<E>> {
 	/** 消息处理器 */
 	private IMsgProcessor _msgProcessor = null;
 	/** 当前工作模式 */
 	private IoWorkModeEnum _currWorkMode = null;
 	/** IO 操作过程 */
-	private IIoWorkProc<IIoWork> _workProc = null;
+	private IIoWorkProcedure<IIoWork, E> _workProc = null;
 
 	/**
 	 * 类默认构造器, 默认工作模式为同步
 	 * 
+	 * @param threadEnums 
+	 * 
 	 */
-	public IoWorkService() {
-		this(null);
+	public IoWorkService(E[] threadEnums) {
+		this(null, threadEnums);
 	}
 
 	/**
 	 * 类参数构造器
 	 * 
 	 * @param msgProc 消息处理器, 如果消息处理器为空, 那么 IO 过程将运行在同步模式下
+	 * @param threadEnums 
 	 * 
 	 * @see IMsgProcessor
 	 * @see IoWorkModeEnum  
 	 * 
 	 */
-	public IoWorkService(IMsgProcessor msgProc) {
+	public IoWorkService(IMsgProcessor msgProc, E[] threadEnums) {
 		if (msgProc == null) {
 			// 同步工作方式
-			this._workProc = new SyncIoWorkProc();
 			this._currWorkMode = IoWorkModeEnum.sync;
+			this._workProc = new SyncIoWorkProcedure<E>();
 		} else {
 			// 异步工作方式
 			this._currWorkMode = IoWorkModeEnum.async;
 			this._msgProcessor = msgProc;
-			this._workProc = new AsyncIoWorkProcFacade(this);
+			this._workProc = new AsyncIoWorkProcedure<E>(this, threadEnums);
 		}
 	}
 
@@ -69,28 +72,19 @@ public class IoWorkService {
 	 * 执行游戏内的 IO 操作
 	 * 
 	 * @param work
+	 * @param threadEnum 
 	 * 
 	 */
-	public void startInternalWork(IIoWorkHasID work) {
+	public void startIoWork(IIoWork work, E threadEnum) {
 		if (work == null) {
 			return;
 		}
 
-		this._workProc.startWork(work);
-	}
-
-	/**
-	 * 执行游戏外的 IO 操作
-	 * 
-	 * @param work
-	 * 
-	 */
-	public void startExternalWork(IIoWorkNotID work) {
-		if (work == null) {
+		if (threadEnum == null) {
 			return;
 		}
 
-		this._workProc.startWork(work);
+		this._workProc.startWork(work, threadEnum);
 	}
 
 	/**
@@ -102,13 +96,13 @@ public class IoWorkService {
 	 * 
 	 * @param work
 	 */
-	void onIoWorkFinished(StatefulIoWork work) {
+	void onIoWorkFinished(StatefulIoWork<E> work) {
 		if (work == null) {
 			return;
 		}
 
 		// 创建 IO 完成消息, 并交给消息处理器处理
-		AbstractMsg msg = new IoWorkDoFinishedMsg(work.getOrigThreadName(), work);
+		AbstractMsg msg = new IoWorkDoFinishedMsg(work);
 		this._msgProcessor.enqueue(msg);
 	}
 
@@ -125,13 +119,11 @@ public class IoWorkService {
 		/**
 		 * 类参数构造器
 		 * 
-		 * @param targetProcessorName
 		 * @param work 
 		 * @throws IllegalArgumentException if work is null
 		 * 
 		 */
 		public IoWorkDoFinishedMsg(
-			String targetProcessorName, 
 			IIoWork work) {
 
 			if (work == null) {

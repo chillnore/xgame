@@ -1,61 +1,62 @@
 package war2.common.io;
 
-import java.util.concurrent.BlockingQueue;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 
 import war2.common.XgameNullArgsError;
 
 /**
- * 异步 IO 工作过程, 有 ID
+ * 异步 IO 过程
  * 
- * @author haijiang
+ * @author hjj2019
+ *
+ * @param <E> 
  * 
  */
-class AsyncIoWorkProcHasID implements IIoWorkProc<IIoWorkHasID> {
-	/** 处理器名称 */
-	private static final String PROCESSOR_NAME = "xgame::AsyncIoWorkProcHasID";
-	/** 最大线程数量 */
-	private static final int MAX_THREADS = 8;
-
+class AsyncIoWorkProcedure<E extends Enum<E>> implements IIoWorkProcedure<IIoWork, E> {
+	/** 过程名称 */
+	private static final String PROCEDURE_NAME = "xgame::AsyncIoWorkProcedure";
 	/** IO 工作服务 */
-	private IoWorkService _workServ = null;
-	/** 运行器数组 */
-	private IoWorkRunner[] _runnerArray = null;
+	private IoWorkService<E> _workServ = null;
+	/** 运行器字典 */
+	private Map<E, AsyncIoWorkRunner<E>> _runnerMap = null;
 
 	/**
 	 * 类参数构造器
 	 * 
 	 * @param workServ 
+	 * @param threadEnums 
+	 * 
 	 * @throws XgameNullArgsError if workServ == null 
 	 * 
 	 */
-	public AsyncIoWorkProcHasID(IoWorkService workServ) {
+	public AsyncIoWorkProcedure(IoWorkService<E> workServ, E[] threadEnums) {
 		if (workServ == null) {
 			throw new XgameNullArgsError("workServ");
 		}
 
 		this._workServ = workServ;
 		// 创建运行器数组
-		this._runnerArray = new IoWorkRunner[MAX_THREADS];
+		this._runnerMap = new HashMap<E, AsyncIoWorkRunner<E>>();
 
 		// 创建线程命名工厂
 		ThreadNamingFactory nf = new ThreadNamingFactory();
 		// 创建线程池
-		ExecutorService execServ = Executors.newFixedThreadPool(MAX_THREADS, nf);
+		ExecutorService execServ = Executors.newFixedThreadPool(threadEnums.length, nf);
 		
-		for (int i = 0; i < MAX_THREADS; i++) {
+		for (E threadEnum : threadEnums) {
 			// 运行器名称
-			String runnerName = PROCESSOR_NAME + "::" + (i > 9 ? i : "0" + i);
+			String runnerName = PROCEDURE_NAME + "::" + threadEnum.name();
 			// 修改当前名称
 			nf.putCurrName(runnerName);
 			// 创建运行器
-			IoWorkRunner runner = new IoWorkRunner(this);
+			AsyncIoWorkRunner<E> runner = new AsyncIoWorkRunner<E>(this);
 
-			// 添加运行器到数组中
-			this._runnerArray[i] = runner;
+			// 添加运行器到字典中
+			this._runnerMap.put(threadEnum, runner);
 			
 			// 提交并执行线程
 			execServ.submit(runner);
@@ -63,14 +64,14 @@ class AsyncIoWorkProcHasID implements IIoWorkProc<IIoWorkHasID> {
 	}
 
 	@Override
-	public void startWork(IIoWorkHasID work) {
+	public void startWork(IIoWork work, E threadEnum) {
 		if (work == null) {
 			return;
 		}
 
 		// 将异步操作包装成一个有状态的对象, 
 		// 然后带入 callInit, callAsyncProc, callFinish 等函数中!
-		this.nextStep(new StatefulIoWork(work));
+		this.nextStep(new StatefulIoWork<E>(work, threadEnum));
 	}
 
 	/**
@@ -78,7 +79,7 @@ class AsyncIoWorkProcHasID implements IIoWorkProc<IIoWorkHasID> {
 	 * 
 	 * @param work
 	 */
-	private void callInit(StatefulIoWork work) {
+	private void callInit(StatefulIoWork<E> work) {
 		if (work == null) {
 			return;
 		}
@@ -92,20 +93,13 @@ class AsyncIoWorkProcHasID implements IIoWorkProc<IIoWorkHasID> {
 	 * 
 	 * @param work
 	 */
-	private void callAsyncProc(StatefulIoWork work) {
+	private void callAsyncProc(StatefulIoWork<E> work) {
 		if (work == null) {
 			return;
 		}
 
-		// 获取有 ID 的工作
-		IIoWorkHasID workHasID = (IIoWorkHasID)work.getInnerWork();
-
-		if (workHasID == null) {
-			return;
-		}
-
 		// 获取运行器
-		IoWorkRunner runner = this.getWorkRunner(this._runnerArray, workHasID.getID());
+		AsyncIoWorkRunner<E> runner = this.getAsyncIoWorkRunner(work.getThreadEnum());
 
 		if (runner == null) {
 			return;
@@ -117,23 +111,16 @@ class AsyncIoWorkProcHasID implements IIoWorkProc<IIoWorkHasID> {
 	/**
 	 * 获取操作运行器
 	 * 
-	 * @param runnerArray
-	 * @param workID
+	 * @param threadEnum 
 	 * @return
 	 * 
 	 */
-	private IoWorkRunner getWorkRunner(IoWorkRunner[] runnerArray, int workID) {
-		if (runnerArray == null || 
-			runnerArray.length <= 0) {
+	private AsyncIoWorkRunner<E> getAsyncIoWorkRunner(E threadEnum) {
+		if (threadEnum == null) {
 			return null;
+		} else {
+			return this._runnerMap.get(threadEnum);
 		}
-
-		if (workID < 0) {
-			workID = 0;
-		}
-
-		int index = workID % runnerArray.length;
-		return runnerArray[index];
 	}
 
 	/**
@@ -141,7 +128,7 @@ class AsyncIoWorkProcHasID implements IIoWorkProc<IIoWorkHasID> {
 	 * 
 	 * @param work
 	 */
-	private void callFinish(final StatefulIoWork work) {
+	private void callFinish(final StatefulIoWork<E> work) {
 		if (work == null) {
 			return;
 		}
@@ -163,7 +150,7 @@ class AsyncIoWorkProcHasID implements IIoWorkProc<IIoWorkHasID> {
 	 * 
 	 * @param work
 	 */
-	private void nextStep(StatefulIoWork work) {
+	void nextStep(StatefulIoWork<E> work) {
 		if (work == null) {
 			return;
 		}
@@ -214,65 +201,6 @@ class AsyncIoWorkProcHasID implements IIoWorkProc<IIoWorkHasID> {
 				return null;
 			} else {
 				return new Thread(r, this._currName);
-			}
-		}
-	}
-
-	/**
-	 * IO 工作运行器
-	 * 
-	 * @author haijiang
-	 *
-	 */
-	private static class IoWorkRunner implements Runnable {
-		/** 工作队列 */
-		private BlockingQueue<StatefulIoWork> _workQueue = null;
-		/** 工作过程 */
-		private AsyncIoWorkProcHasID _workProc = null;
-
-		/**
-		 * 类参数构造器
-		 * 
-		 * @param workProc 
-		 * @throws XgameNullArgsError if workProc == null 
-		 * 
-		 */
-		public IoWorkRunner(AsyncIoWorkProcHasID workProc) {
-			if (workProc == null) {
-				throw new XgameNullArgsError("workProc");
-			}
-
-			this._workQueue = new LinkedBlockingQueue<StatefulIoWork>();
-			this._workProc = workProc;
-		}
-
-		/**
-		 * IO 工作入队
-		 * 
-		 * @param work
-		 */
-		public void enqueue(StatefulIoWork work) {
-			if (work == null) {
-				return;
-			} else {
-				this._workQueue.add(work);
-			}
-		}
-
-		@Override
-		public void run() {
-			while (true) {
-				try {
-					StatefulIoWork work = this._workQueue.take();
-
-					if (work != null) {
-						work.doAsyncProc();
-						this._workProc.nextStep(work);
-					}
-				} catch (Exception ex) {
-					// 记录异常信息
-					IoLogger.theInstance().logError(new XgameIoError("AsyncIoWorkProcHasID::IoWorkRunner error", ex));
-				}
 			}
 		}
 	}

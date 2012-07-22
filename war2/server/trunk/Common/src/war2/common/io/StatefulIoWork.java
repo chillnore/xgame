@@ -8,29 +8,30 @@ import war2.common.XgameNullArgsError;
  * @author haijiang
  * 
  */
-class StatefulIoWork implements IIoWork {
+class StatefulIoWork<E extends Enum<E>> implements IIoWork {
 	/** 异步操作 */
 	private IIoWork _innerWork = null;
+	/** 线程枚举 */
+	private E _threadEnum = null;
 	/** 当前状态 */
 	private IoWorkStateEnum _currState = null;
-	/** 原有线程名称 */
-	private String _origThreadName = null;
 
 	/**
 	 * 类参数构造器
 	 * 
 	 * @param work
+	 * @param threadEnum 
+	 * 
 	 * @throws XgameNullArgsError if work == null 
 	 * 
 	 */
-	public StatefulIoWork(IIoWork work) {
+	public StatefulIoWork(IIoWork work, E threadEnum) {
 		if (work == null) {
 			throw new XgameNullArgsError("work");
 		}
 
 		this._innerWork = work;
-		// 设置当前操作对象所属线程名称
-		this._origThreadName = Thread.currentThread().getName();
+		this._threadEnum = threadEnum;
 	}
 
 	/**
@@ -40,6 +41,16 @@ class StatefulIoWork implements IIoWork {
 	 */
 	public IIoWork getInnerWork() {
 		return this._innerWork;
+	}
+
+	/**
+	 * 获取线程枚举
+	 * 
+	 * @return 
+	 * 
+	 */
+	public E getThreadEnum() {
+		return this._threadEnum;
 	}
 
 	/**
@@ -62,15 +73,6 @@ class StatefulIoWork implements IIoWork {
 		}
 
 		this._currState = value;
-	}
-
-	/**
-	 * 获取当前操作所属线程名称
-	 * 
-	 * @return
-	 */
-	public String getOrigThreadName() {
-		return this._origThreadName;
 	}
 
 	@Override

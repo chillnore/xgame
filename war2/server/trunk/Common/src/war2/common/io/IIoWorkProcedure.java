@@ -6,11 +6,13 @@ package war2.common.io;
  * @author haijiang
  *
  */
-interface IIoWorkProc<TWork extends IIoWork> {
+interface IIoWorkProcedure<TWork extends IIoWork, E extends Enum<E>> {
 	/**
 	 * 开始工作
 	 * 
 	 * @param work
+	 * @param e 
+	 * 
 	 */
-	void startWork(TWork work);
+	void startWork(TWork work, E e);
 }

@@ -14,6 +14,7 @@ import war2.common.XgameError;
 import war2.common.XgameNullArgsError;
 import war2.common.action.AbstractMsgActionMap;
 import war2.common.action.IMsgAction;
+import war2.common.io.IoWorkService;
 import war2.common.msg.AbstractExternalMsg;
 import war2.common.msg.AbstractMsg;
 import war2.common.msg.AbstractMsgMap;
@@ -47,6 +48,8 @@ public class SceneKernal {
 	private AbstractMsgMap _msgMap = AbstractMsgMap.newDefault();
 	/** 消息行为字典 */
 	private AbstractMsgActionMap _msgActionMap = AbstractMsgActionMap.newDefault();
+	/** IO 操作服务 */
+	private IoWorkService<IoWorkThreadEnum> _ioWorkServ = null;
 
 	/**
 	 * 类默认构造器
@@ -84,6 +87,16 @@ public class SceneKernal {
 	}
 
 	/**
+	 * 获取 IO 操作服务
+	 * 
+	 * @return 
+	 * 
+	 */
+	public IoWorkService<IoWorkThreadEnum> getIoWorkService() {
+		return this._ioWorkServ;
+	}
+
+	/**
 	 * 初始化服务器
 	 * 
 	 */
@@ -92,6 +105,8 @@ public class SceneKernal {
 		this.initSceneBizModules();
 		// 初始化消息队列处理器
 		this.initMsgQueueProc();
+		// 初始化 IO 操作服务
+		this.initIoWorkService();
 	}
 
 	/**
@@ -268,7 +283,15 @@ public class SceneKernal {
 			}
 		}
 	}
-	
+
+	/**
+	 * 初始化 IO 操作服务
+	 * 
+	 */
+	private void initIoWorkService() {
+		this._ioWorkServ = new IoWorkService<IoWorkThreadEnum>(this._msgQueueProc, IoWorkThreadEnum.values());
+	}
+
 	/**
 	 * 启动服务器, 开始接收消息
 	 * 

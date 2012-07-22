@@ -6,7 +6,7 @@ package war2.common.io;
  * @author haijiang
  *
  */
-interface IIoWork {
+public interface IIoWork {
 	/**
 	 * 初始化异步操作
 	 * 
