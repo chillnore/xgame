@@ -21,6 +21,6 @@ public class SceneServer {
 
 		// 初始化并启动网关服务器
 		k.init();
-//		k.startUp();
+		k.startUp();
 	}
 }

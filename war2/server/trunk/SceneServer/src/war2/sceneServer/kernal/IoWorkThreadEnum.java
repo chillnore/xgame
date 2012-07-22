@@ -11,6 +11,7 @@ public enum IoWorkThreadEnum {
 	login, 
 	/** 数据库操作 */
 	db,
-	/** 文件操作 */
-	file, 
+	/** 第三方接口 */
+	thirdPartyInterface,
+;
 }

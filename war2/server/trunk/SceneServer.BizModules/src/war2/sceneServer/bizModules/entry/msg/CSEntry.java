@@ -10,9 +10,9 @@ import war2.common.msg.AbstractExternalMsg;
  * @author hjj2019
  *
  */
-public class CSEntryScene extends AbstractExternalMsg {
+public class CSEntry extends AbstractExternalMsg {
 	/** 消息类型 ID */
-	private static final short MSG_TYPE_ID = 100;
+	private static final short MSG_TYPE_ID = 1001;
 
 	@Override
 	public short getMsgTypeID() {

@@ -48,7 +48,7 @@
 			<property name="antMakeTempDir0" value="${targetPath}/make/ant" />
 			
 			<!--// 0. 先清理目录 //-->
-			<echo>:: 清理名录: ${targetPath}/build/out</echo>
+			<echo>:: 清理名录 : ${antMakeTempDir0}</echo>
 			<deltree dir="${antMakeTempDir0}" />
 			<mkdir dir="${antMakeTempDir0}/libs" />
 			<mkdir dir="${antMakeTempDir0}/classes" />
@@ -64,7 +64,7 @@
 			</foreach>
 
 			<!--// 2. 构建 java 源文件 //-->
-			<echo>:: 构建当前项目: ${targetPath}"</echo>
+			<echo>:: 构建当前项目 : ${targetPath}</echo>
 			<javac debug="true"
 				destdir="${antMakeTempDir0}/classes" 
 				source="@{javaVer}" 
@@ -82,7 +82,7 @@
 			<!--// 3. 拷贝 META-INF 目录 //-->
 			<echo>:: 拷贝 META-INF</echo>
 			<echo>:: from : ${targetPath}/src</echo>
-			<echo>::   to : ${targetPath}/ant/classes</echo>
+			<echo>::   to : ${antMakeTempDir0}/classes</echo>
 			<copy todir="${antMakeTempDir0}/classes">
 				<fileset dir="${targetPath}/src">
 					<include name="META-INF/*.*" />
@@ -101,7 +101,7 @@
 			<elseif>
 				<equals arg1="${file.separator}" arg2="/" />
 				<then>
-					<!--// Unix 系统 //-->
+					<!--// Unix/Linux/Mac 系统 //-->
 					<propertyregex property="targetPath_shortName" 
 						input="${targetPath}" 
 						regexp="/([^/]*?)$" select="\1" />
@@ -112,7 +112,7 @@
 			<property name="jarFilePath" 
 				value="${antMakeTempDir0}/jar/${targetPath_shortName}-@{targetVer}.jar" />
 
-			<echo>:: 打包 jar 文件: ${jarFilePath}</echo>
+			<echo>:: 打包 jar 文件 : ${jarFilePath}</echo>
 			<jar destfile="${jarFilePath}">
 				<fileset dir="${antMakeTempDir0}/classes">
 					<include name="**/*.*" />
@@ -130,7 +130,7 @@
 		//-->
 	<target name="jarRelativeProjAndCopy">
 		<!--// 构建并打包相关项目 //-->
-		<echo>:: 构建相关项目: ${relativeProj}</echo>
+		<echo>:: 构建相关项目 : ${relativeProj}</echo>
 
 		<!--// 调用相关项目的 ant-buildJar.xml //-->
 		<ant antfile="${relativeProj}/make/ant-buildJar.xml" 
@@ -141,7 +141,7 @@
 		<property name="antMakeTempDir1" value="${relativeProj}/make/ant" />
 
 		<!--// 拷贝 jar 文件 //-->
-		<echo>:: 拷贝 jar 文件到: ${__targetPath__}</echo>
+		<echo>:: 拷贝 jar 文件到 : ${__targetPath__}</echo>
 		<copy todir="${__targetPath__}">
 			<fileset dir="${antMakeTempDir1}/libs">
 				<include name="*.jar" />

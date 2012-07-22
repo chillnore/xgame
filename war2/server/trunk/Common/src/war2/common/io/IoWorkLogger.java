@@ -8,16 +8,16 @@ import war2.common.XgameLogger;
  * @author haijiang
  *
  */
-public class IoLogger extends XgameLogger {
+public class IoWorkLogger extends XgameLogger {
 	/** 单例对象 */
-	private static volatile IoLogger _instance;
+	private static volatile IoWorkLogger _instance;
 	
 	/**
 	 * 类默认构造器
 	 * 
 	 */
-	private IoLogger() {
-		super(IoLogger.class.getName());
+	private IoWorkLogger() {
+		super(IoWorkLogger.class.getName());
 	}
 
 	/**
@@ -25,11 +25,11 @@ public class IoLogger extends XgameLogger {
 	 * 
 	 * @return
 	 */
-	public static IoLogger theInstance() {
+	public static IoWorkLogger theInstance() {
 		if (_instance == null) {
 			synchronized (XgameLogger.class) {
 				if (_instance == null) {
-					_instance = new IoLogger();
+					_instance = new IoWorkLogger();
 				}
 			}
 		}

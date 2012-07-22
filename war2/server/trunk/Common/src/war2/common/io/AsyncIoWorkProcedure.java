@@ -31,11 +31,17 @@ class AsyncIoWorkProcedure<E extends Enum<E>> implements IIoWorkProcedure<IIoWor
 	 * @param threadEnums 
 	 * 
 	 * @throws XgameNullArgsError if workServ == null 
+	 * @throws XgameNullArgsError if threadEnums == null || threadEnums.length <= 0 
 	 * 
 	 */
 	public AsyncIoWorkProcedure(IoWorkService<E> workServ, E[] threadEnums) {
 		if (workServ == null) {
 			throw new XgameNullArgsError("workServ");
+		}
+
+		if (threadEnums == null || 
+			threadEnums.length <= 0) {
+			throw new XgameNullArgsError("threadEnums");
 		}
 
 		this._workServ = workServ;
@@ -45,7 +51,8 @@ class AsyncIoWorkProcedure<E extends Enum<E>> implements IIoWorkProcedure<IIoWor
 		// 创建线程命名工厂
 		ThreadNamingFactory nf = new ThreadNamingFactory();
 		// 创建线程池
-		ExecutorService execServ = Executors.newFixedThreadPool(threadEnums.length, nf);
+		ExecutorService execServ = Executors.newFixedThreadPool(
+			threadEnums.length, nf);
 		
 		for (E threadEnum : threadEnums) {
 			// 运行器名称
@@ -65,7 +72,8 @@ class AsyncIoWorkProcedure<E extends Enum<E>> implements IIoWorkProcedure<IIoWor
 
 	@Override
 	public void startWork(IIoWork work, E threadEnum) {
-		if (work == null) {
+		if (work == null || 
+			threadEnum == null) {
 			return;
 		}
 
@@ -94,7 +102,8 @@ class AsyncIoWorkProcedure<E extends Enum<E>> implements IIoWorkProcedure<IIoWor
 	 * @param work
 	 */
 	private void callAsyncProc(StatefulIoWork<E> work) {
-		if (work == null) {
+		if (work == null || 
+			work.getThreadEnum() == null) {
 			return;
 		}
 

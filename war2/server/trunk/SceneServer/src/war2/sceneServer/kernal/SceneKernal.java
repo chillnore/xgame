@@ -289,7 +289,10 @@ public class SceneKernal {
 	 * 
 	 */
 	private void initIoWorkService() {
-		this._ioWorkServ = new IoWorkService<IoWorkThreadEnum>(this._msgQueueProc, IoWorkThreadEnum.values());
+		// 创建 IO 操作服务
+		this._ioWorkServ = new IoWorkService<IoWorkThreadEnum>(
+			this._msgQueueProc, 
+			IoWorkThreadEnum.values());
 	}
 
 	/**

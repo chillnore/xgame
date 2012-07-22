@@ -8,7 +8,7 @@ import war2.common.XgameError;
  * @author haijiang
  *
  */
-public class XgameIoError extends XgameError {
+public class XgameIoWorkError extends XgameError {
 	/** serialVersionUID */
 	private static final long serialVersionUID = 3844453167745941900L;
 
@@ -16,7 +16,7 @@ public class XgameIoError extends XgameError {
 	 * 类默认构造器
 	 * 
 	 */
-	public XgameIoError() {
+	public XgameIoWorkError() {
 		super();
 	}
 
@@ -25,7 +25,7 @@ public class XgameIoError extends XgameError {
 	 * 
 	 * @param msg
 	 */
-	public XgameIoError(String msg) {
+	public XgameIoWorkError(String msg) {
 		super(msg);
 	}
 
@@ -34,7 +34,7 @@ public class XgameIoError extends XgameError {
 	 * 
 	 * @param error
 	 */
-	public XgameIoError(Throwable error) {
+	public XgameIoWorkError(Throwable error) {
 		super(error);
 	}
 
@@ -44,7 +44,7 @@ public class XgameIoError extends XgameError {
 	 * @param msg
 	 * @param error
 	 */
-	public XgameIoError(String msg, Throwable error) {
+	public XgameIoWorkError(String msg, Throwable error) {
 		super(msg, error);
 	}
 }

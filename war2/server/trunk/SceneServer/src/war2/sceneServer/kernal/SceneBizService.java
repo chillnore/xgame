@@ -22,6 +22,7 @@ public class SceneBizService {
 			return;
 		}
 
+		// 开始 IO 操作
 		SceneKernal.theInstance()
 			.getIoWorkService()
 			.startIoWork(work, threadEnum);

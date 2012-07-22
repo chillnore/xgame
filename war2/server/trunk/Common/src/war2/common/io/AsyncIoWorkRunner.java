@@ -60,7 +60,7 @@ class AsyncIoWorkRunner<E extends Enum<E>> implements Runnable {
 				}
 			} catch (Exception ex) {
 				// 记录异常信息
-				IoLogger.theInstance().logError(new XgameIoError("AsyncIoWorkRunner error", ex));
+				IoWorkLogger.theInstance().logError(new XgameIoWorkError(Thread.currentThread().getName() + " error", ex));
 			}
 		}
 	}
