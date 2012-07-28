@@ -33,7 +33,7 @@ public class CSEntryAction extends SceneMsgAction<CSEntry> {
 			return;
 		}
 
-		this._entryBizServ.entryScene("123456");
+		this._entryBizServ.entryScene(msg.getTicket());
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class CSEntryAction extends SceneMsgAction<CSEntry> {
 			return;
 		}
 
-		System.out.println("result");
+		System.out.println(result.getTicket());
 	}
 
 	/**

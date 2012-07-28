@@ -99,6 +99,21 @@ public class XgameLogger {
 	}
 
 	/**
+	 * 记录调试信息
+	 * 
+	 * @param msg 
+	 * 
+	 */
+	public void logDebug(String msg) {
+		if (msg == null || 
+			msg.isEmpty()) {
+			return;
+		}
+
+		this.getLogger().debug(msg);
+	}
+
+	/**
 	 * 获取日志对象
 	 * 
 	 * @return

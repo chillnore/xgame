@@ -1,5 +1,7 @@
 package war2.common.io;
 
+import java.text.MessageFormat;
+
 import war2.common.XgameNullArgsError;
 
 /**
@@ -77,6 +79,10 @@ class StatefulIoWork<E extends Enum<E>> implements IIoWork {
 
 	@Override
 	public boolean doInit() {
+		// 记录日志信息
+		logInfo(MessageFormat.format("StatefulIoWork[name={0}].doInit", 
+			this.getThreadEnum().name()));
+
 		// 获取执行结果
 		boolean result = this._innerWork.doInit();
 
@@ -92,6 +98,10 @@ class StatefulIoWork<E extends Enum<E>> implements IIoWork {
 
 	@Override
 	public boolean doAsyncProc() {
+		// 记录日志信息
+		logInfo(MessageFormat.format("StatefulIoWork[name={0}].doAsyncProc", 
+			this.getThreadEnum().name()));
+
 		// 获取执行结果
 		boolean result = this._innerWork.doAsyncProc();
 
@@ -107,6 +117,10 @@ class StatefulIoWork<E extends Enum<E>> implements IIoWork {
 
 	@Override
 	public boolean doFinish() {
+		// 记录日志信息
+		logInfo(MessageFormat.format("StatefulIoWork[name={0}].doFinish", 
+			this.getThreadEnum().name()));
+
 		// 获取执行结果
 		boolean result = this._innerWork.doFinish();
 
@@ -117,5 +131,20 @@ class StatefulIoWork<E extends Enum<E>> implements IIoWork {
 			: IoWorkStateEnum.exit);
 
 		return result;
+	}
+
+	/**
+	 * 记录日志信息
+	 * 
+	 * @param msg 
+	 * 
+	 */
+	private static void logInfo(String msg) {
+		if (msg == null || 
+			msg.isEmpty()) {
+			return;
+		}
+
+		IoWorkLogger.theInstance().logInfo(msg);
 	}
 }

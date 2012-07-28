@@ -11,7 +11,7 @@ import war2.common.XgameLogger;
  */
 public class MsgLogger extends XgameLogger {
 	/** 单例对象 */
-	private static volatile MsgLogger _theInstance;
+	private static volatile MsgLogger _instance;
 	
 	/**
 	 * 类默认构造器
@@ -26,15 +26,15 @@ public class MsgLogger extends XgameLogger {
 	 * 
 	 * @return
 	 */
-	public static MsgLogger getInstance() {
-		if (_theInstance == null) {
+	public static MsgLogger theInstance() {
+		if (_instance == null) {
 			synchronized (MsgLogger.class) {
-				if (_theInstance == null) {
-					_theInstance = new MsgLogger();
+				if (_instance == null) {
+					_instance = new MsgLogger();
 				}
 			}
 		}
 
-		return _theInstance;
+		return _instance;
 	}
 }

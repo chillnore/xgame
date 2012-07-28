@@ -72,7 +72,7 @@ public class MsgJsonSerializer implements IMsgSerializer {
 			return msg_copy;
 		} catch (Exception ex) {
 			// 记录错误信息
-			MsgLogger.getInstance().logError(new XgameMsgError(ex));
+			logError(new XgameMsgError(ex));
 			return null;
 		}
 	}
@@ -104,8 +104,22 @@ public class MsgJsonSerializer implements IMsgSerializer {
 			return jsonStr.getBytes("UTF-8");
 		} catch (Exception ex) {
 			// 记录错误信息
-			MsgLogger.getInstance().logError(new XgameMsgError(ex));
+			logError(new XgameMsgError(ex));
 			return null;
 		}
+	}
+
+	/**
+	 * 记录错误信息
+	 * 
+	 * @param msg 
+	 * 
+	 */
+	private static void logError(Throwable err) {
+		if (err == null) {
+			return;
+		}
+
+		MsgLogger.theInstance().logError(err);
 	}
 }

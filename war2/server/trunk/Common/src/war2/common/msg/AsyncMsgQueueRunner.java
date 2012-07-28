@@ -104,7 +104,7 @@ final class AsyncMsgQueueRunner implements Runnable {
 			}
 
 			// 记录日志消息
-			logInfo(MessageFormat.format("AsyncMsgQueueProcessor[@name={0}]$AsyncMsgQueueRunner#run >> take : {1}", 
+			logInfo(MessageFormat.format("AsyncMsgQueueRunner[@name={0}]#run >> take : {1}", 
 				Thread.currentThread().getName(), 
 				msg.getClass().getName()));
 
@@ -156,7 +156,7 @@ final class AsyncMsgQueueRunner implements Runnable {
 			return;
 		}
 
-		MsgLogger.getInstance().logInfo(msg);
+		MsgLogger.theInstance().logInfo(msg);
 	}
 
 	/**
@@ -171,7 +171,7 @@ final class AsyncMsgQueueRunner implements Runnable {
 			return;
 		}
 
-		MsgLogger.getInstance().logWarn(msg);
+		MsgLogger.theInstance().logWarn(msg);
 	}
 
 	/**
@@ -185,6 +185,6 @@ final class AsyncMsgQueueRunner implements Runnable {
 			return;
 		}
 
-		MsgLogger.getInstance().logError(err);
+		MsgLogger.theInstance().logError(err);
 	}
 }

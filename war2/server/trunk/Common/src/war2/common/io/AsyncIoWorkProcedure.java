@@ -46,7 +46,24 @@ class AsyncIoWorkProcedure<E extends Enum<E>> implements IIoWorkProcedure<IIoWor
 
 		this._workServ = workServ;
 		// 创建运行器数组
-		this._runnerMap = new HashMap<E, AsyncIoWorkRunner<E>>();
+		this._runnerMap = this.createIoWorkRunnerMap(threadEnums);
+	}
+
+	/**
+	 * 创建 IO 操作执行器字典
+	 * 
+	 * @param threadEnums
+	 * @return 
+	 * 
+	 */
+	private Map<E, AsyncIoWorkRunner<E>> createIoWorkRunnerMap(E[] threadEnums) {
+		if (threadEnums == null || 
+			threadEnums.length <= 0) {
+			throw new XgameNullArgsError("threadEnums");
+		}
+
+		// IO 操作执行器字典
+		Map<E, AsyncIoWorkRunner<E>> runnerMap = new HashMap<E, AsyncIoWorkRunner<E>>();
 
 		// 创建线程命名工厂
 		ThreadNamingFactory nf = new ThreadNamingFactory();
@@ -63,11 +80,13 @@ class AsyncIoWorkProcedure<E extends Enum<E>> implements IIoWorkProcedure<IIoWor
 			AsyncIoWorkRunner<E> runner = new AsyncIoWorkRunner<E>(this);
 
 			// 添加运行器到字典中
-			this._runnerMap.put(threadEnum, runner);
+			runnerMap.put(threadEnum, runner);
 			
 			// 提交并执行线程
 			execServ.submit(runner);
 		}
+
+		return runnerMap;
 	}
 
 	@Override
@@ -92,6 +111,7 @@ class AsyncIoWorkProcedure<E extends Enum<E>> implements IIoWorkProcedure<IIoWor
 			return;
 		}
 
+		// 执行初始化过程并进入下一步
 		work.doInit();
 		this.nextStep(work);
 	}
@@ -114,6 +134,7 @@ class AsyncIoWorkProcedure<E extends Enum<E>> implements IIoWorkProcedure<IIoWor
 			return;
 		}
 
+		// 将 IO 操作入队到异步线程中
 		runner.enqueue(work);
 	}
 

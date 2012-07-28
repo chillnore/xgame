@@ -102,7 +102,7 @@ public class IoWorkService<E extends Enum<E>> {
 		}
 
 		// 创建 IO 完成消息, 并交给消息处理器处理
-		AbstractMsg msg = new IoWorkDoFinishedMsg(work);
+		AbstractMsg msg = new IoWorkDoFinishMsg(work);
 		this._msgProcessor.enqueue(msg);
 	}
 
@@ -112,7 +112,7 @@ public class IoWorkService<E extends Enum<E>> {
 	 * @author haijiang
 	 *
 	 */
-	private static class IoWorkDoFinishedMsg extends AbstractInternalMsg {
+	private static class IoWorkDoFinishMsg extends AbstractInternalMsg {
 		/** IO 操作 */
 		private IIoWork _work;
 
@@ -123,7 +123,7 @@ public class IoWorkService<E extends Enum<E>> {
 		 * @throws IllegalArgumentException if work is null
 		 * 
 		 */
-		public IoWorkDoFinishedMsg(
+		public IoWorkDoFinishMsg(
 			IIoWork work) {
 
 			if (work == null) {

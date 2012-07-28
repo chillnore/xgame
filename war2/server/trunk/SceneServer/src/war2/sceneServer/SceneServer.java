@@ -16,6 +16,9 @@ public class SceneServer {
 	 * 
 	 */
 	public static void main(String[] args) {
+		System.out.println("War2 SceneServer");
+		System.out.println("+-------\n");
+
 		// 创建内核程序
 		SceneKernal k = SceneKernal.theInstance();
 

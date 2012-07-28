@@ -33,10 +33,8 @@ import war2.common.utils.PackageUtil.IClazzFilter;
  *
  */
 public class SceneKernal {
-	/** 消息处理器名称 */
-	private static final String MSG_PROC_NAME = "war2::sceneServer::msgProc";
-	/** client --&gt; gateway 消息解码器 */
-	private static final String CG_MSG_CODEC = "war2::sceneServer::cgMsgCodec";
+	/** client --&gt; sceneServer 消息解码器 */
+	private static final String CS_MSG_CODEC = "xgame::csMsgCodec";
 	/** 场景业务模块包名称 */
 	private static final String SCENE_BIZ_MODULES_PACKAGE = "war2.sceneServer.bizModules";
 
@@ -114,6 +112,9 @@ public class SceneKernal {
 	 * 
 	 */
 	private void initSceneBizModules() {
+		// 记录启动日志
+		logInfo(":: init SceneBizModules");
+
 		// 获取当前应用目录
 		String sceneBizModulesDir = this.getSceneBizModulesDir();
 		
@@ -156,8 +157,11 @@ public class SceneKernal {
 	 * 
 	 */
 	private void initMsgQueueProc() {
+		// 记录消息队列初始化日志
+		logInfo(":: init MsgQueueProcessor");
+		
 		// 创建消息处理器
-		this._msgQueueProc = new AsyncMsgQueueProcessor(MSG_PROC_NAME, this._msgActionMap);
+		this._msgQueueProc = new AsyncMsgQueueProcessor(this._msgActionMap);
 	}
 
 	/**
@@ -188,6 +192,9 @@ public class SceneKernal {
 			AbstractExternalMsg msgObj = clazz.newInstance();
 			// 添加消息到字典
 			this._msgMap.putMsg(msgObj.getMsgTypeID(), msgObj);
+			
+			// 记录消息注册日志
+			logInfo(":::: register MsgClazz : " + clazz.getName());
 		} catch (Exception ex) {
 			// 抛出异常
 			throw new XgameError(ex);
@@ -210,6 +217,9 @@ public class SceneKernal {
 			IMsgAction<?> msgActionObj = clazz.newInstance();
 			// 添加消息行为到字典
 			this._msgActionMap.putMsgAction(getMsgTypeID(msgActionObj), msgActionObj);
+
+			// 记录消息行为注册日志
+			logInfo(":::: register MsgActionClazz : " + clazz.getName());
 		} catch (Exception ex) {
 			// 抛出异常
 			throw new XgameError(ex);
@@ -289,6 +299,9 @@ public class SceneKernal {
 	 * 
 	 */
 	private void initIoWorkService() {
+		// 记录异步操作服务初始化日志
+		logInfo(":: init IoWorkService");
+		
 		// 创建 IO 操作服务
 		this._ioWorkServ = new IoWorkService<IoWorkThreadEnum>(
 			this._msgQueueProc, 
@@ -302,6 +315,9 @@ public class SceneKernal {
 	public void startUp() {
 		// 开启客户端端口监听
 		this.startPortListen();
+
+		// 记录准备完成日志
+		logInfo(":: ok!!");
 	}
 
 	/**
@@ -309,6 +325,9 @@ public class SceneKernal {
 	 * 
 	 */
 	private void startPortListen() {
+		// 记录异步操作服务初始化日志
+		logInfo(":: start PortListen");
+				
 		// 创建 IO 接收器
 		IoAcceptor acceptor = new NioSocketAcceptor();
 
@@ -316,13 +335,13 @@ public class SceneKernal {
 		MINA_CodecFactory mcf = new MINA_CodecFactory(new MsgJsonSerializer(this._msgMap));
 
 		// 添加自定义编解码器
-		acceptor.getFilterChain().addLast(CG_MSG_CODEC, new ProtocolCodecFilter(mcf));
+		acceptor.getFilterChain().addLast(CS_MSG_CODEC, new ProtocolCodecFilter(mcf));
 
 		// 获取会话配置
 		IoSessionConfig cfg = acceptor.getSessionConfig();
 		
 		// 设置缓冲区大小
-		cfg.setReadBufferSize(2048);
+		cfg.setReadBufferSize(4096);
 		// 设置 session 空闲时间
 		cfg.setIdleTime(IdleStatus.BOTH_IDLE, 10);
 
@@ -337,5 +356,20 @@ public class SceneKernal {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
+	}
+
+	/**
+	 * 记录消息日志
+	 * 
+	 * @param msg
+	 * 
+	 */
+	private static void logInfo(String msg) {
+		if (msg == null || 
+			msg.isEmpty()) {
+			return;
+		}
+
+		KernalLogger.theInstance().logInfo(msg);
 	}
 }

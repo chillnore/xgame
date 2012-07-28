@@ -1,7 +1,5 @@
 package war2.common.msg;
 
-import java.io.IOException;
-
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolDecoderAdapter;
@@ -44,17 +42,9 @@ class MINA_C2SMsgDecoder extends ProtocolDecoderAdapter {
 		}
 
 		// 创建字节数组
-		byte[] byteArray = new byte[buff.capacity()];
+		byte[] byteArray = buff.array();
 
-		try {
-			// 将缓存数据读入字节数组
-			buff.asInputStream().read(byteArray);
-		} catch (IOException ex) {
-			// 记录异常信息
-			MsgLogger.getInstance().logError(new XgameMsgError(ex));
-			return;
-		}
-
+		// 将字节反序列化为消息
 		AbstractMsg msg = this._serializer.deserialize(byteArray);
 
 		if (msg == null) {
@@ -65,7 +55,7 @@ class MINA_C2SMsgDecoder extends ProtocolDecoderAdapter {
 		msg.setSessionID(session.getId());
 		
 		// 清除缓存
-		buff.position(buff.limit());
+		buff.limit(0);
 		buff.free();
 
 		// 写出消息对象

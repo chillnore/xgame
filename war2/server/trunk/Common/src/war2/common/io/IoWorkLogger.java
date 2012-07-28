@@ -8,7 +8,7 @@ import war2.common.XgameLogger;
  * @author haijiang
  *
  */
-public class IoWorkLogger extends XgameLogger {
+class IoWorkLogger extends XgameLogger {
 	/** 单例对象 */
 	private static volatile IoWorkLogger _instance;
 	

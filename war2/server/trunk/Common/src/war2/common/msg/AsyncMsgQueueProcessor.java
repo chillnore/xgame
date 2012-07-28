@@ -15,23 +15,20 @@ import war2.common.action.AbstractMsgActionMap;
  * 
  */
 public class AsyncMsgQueueProcessor implements IMsgProcessor {
+	/** 消息处理器名称 */
+	private static final String ASYNC_MSG_QUEUE_PROCESSOR_NAME = "xgame::asyncMsgQueueProcessor";
 	/** 消息队列运行器 */
 	private AsyncMsgQueueRunner _runner;
 
 	/**
 	 * 类参数构造器
 	 * 
-	 * @param name 消息处理器名称
 	 * @param msgActionMap 消息行为字典
 	 * @throws XgameNullArgsError if name == null
 	 * @throws XgameNullArgsError if msgActionMap == null 
 	 * 
 	 */
-	public AsyncMsgQueueProcessor(String name, AbstractMsgActionMap msgActionMap) {
-		if (name == null || name.isEmpty()) {
-			throw new XgameNullArgsError("name");
-		}
-
+	public AsyncMsgQueueProcessor(AbstractMsgActionMap msgActionMap) {
 		if (msgActionMap == null) {
 			throw new XgameNullArgsError("msgActionMap");
 		}
@@ -42,7 +39,7 @@ public class AsyncMsgQueueProcessor implements IMsgProcessor {
 		ExecutorService execServ = Executors.newSingleThreadExecutor(nf);
 
 		// 设置线程名称
-		nf.putCurrName(name);
+		nf.putCurrName(ASYNC_MSG_QUEUE_PROCESSOR_NAME);
 		// 创建运行器
 		this._runner = new AsyncMsgQueueRunner(msgActionMap);
 		// 开启消息线程
