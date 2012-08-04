@@ -1,5 +1,7 @@
 package war2.sceneServer.kernal;
 
+import java.util.Set;
+
 import org.apache.mina.core.session.IoSession;
 
 import war2.common.action.IMsgAction;
@@ -26,12 +28,23 @@ public class SceneMsgAction<TMsg extends AbstractMsg> implements IMsgAction<TMsg
 	 * 
 	 */
 	protected void sendMsgToClient(AbstractExternalMsg msg) {
+		this.sendMsgToClient(
+			msg, msg.getSessionID());
+	}
+
+	/**
+	 * 发送消息给客户端
+	 * 
+	 * @param msg
+	 * 
+	 */
+	protected void sendMsgToClient(AbstractExternalMsg msg, long sessionID) {
 		if (msg == null) {
 			return;
 		}
 
 		// 根据玩家 ID 获取 IO 会话
-		IoSession session = OnlineSessionManager.theInstance().getSessionByPlayerID(null);
+		IoSession session = OnlineSessionManager.theInstance().getSessionByID(sessionID);
 
 		if (session == null) {
 			return;
@@ -130,6 +143,63 @@ public class SceneMsgAction<TMsg extends AbstractMsg> implements IMsgAction<TMsg
 			return null;
 		} else {
 			return OnlineSessionManager.theInstance().getPlayerBySessionId(sessionID);
+		}
+	}
+
+	/**
+	 * 给所有在线玩家广播消息
+	 * 
+	 * @param msg 
+	 * 
+	 */
+	protected void broadcast(AbstractExternalMsg msg) {
+		if (msg == null) {
+			return;
+		}
+
+		// 获取会话 ID 集合
+		Set<Long> sessionIDSet = OnlineSessionManager.theInstance().getSessionIDSet();
+
+		if (sessionIDSet == null || 
+			sessionIDSet.size() <= 0) {
+			return;
+		}
+
+		for (Long sessionID : sessionIDSet) {
+			if (sessionID == null || 
+				sessionID <= 0) {
+				continue;
+			}
+
+			// 发送消息
+			this.sendMsgToClient(msg, sessionID);
+		}
+	}
+
+	/**
+	 * 给所有在线玩家广播消息
+	 * 
+	 * @param msg 
+	 * @param toSessionIDs 
+	 * 
+	 */
+	protected void broadcast(AbstractExternalMsg msg, long[] toSessionIDs) {
+		if (msg == null) {
+			return;
+		}
+
+		if (toSessionIDs == null || 
+			toSessionIDs.length <= 0) {
+			return;
+		}
+
+		for (long sessionID : toSessionIDs) {
+			if (sessionID <= 0) {
+				continue;
+			}
+
+			// 发送消息
+			this.sendMsgToClient(msg, sessionID);
 		}
 	}
 }

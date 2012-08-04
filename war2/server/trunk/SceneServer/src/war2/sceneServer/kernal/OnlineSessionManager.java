@@ -1,6 +1,7 @@
 package war2.sceneServer.kernal;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.mina.core.session.IoSession;
@@ -208,5 +209,15 @@ final class OnlineSessionManager {
 		} else {
 			return (Player)session.getAttribute(SESSION_PLAYER_KEY);
 		}
+	}
+
+	/**
+	 * 获取会话 ID 集合
+	 * 
+	 * @return 
+	 * 
+	 */
+	public Set<Long> getSessionIDSet() {
+		return this._sessionMap.keySet();
 	}
 }
