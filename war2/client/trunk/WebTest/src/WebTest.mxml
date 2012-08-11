@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   minWidth="955" 
+			   minHeight="600"
+			   applicationComplete="webApp_applicationCompleteHandler(event)"
+			   click="webApp_clickHandler(event)">
+	
+	<mx:Label x="10" y="10" id="_t" />
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.serialization.json.JSON;
+			import com.adobe.serialization.json.JSONDecoder;
+			
+			import mx.controls.Label;
+			import mx.effects.Move;
+			import mx.events.FlexEvent;
+			
+			/** 套接字 */
+			private var _sock : Socket;
+			/** 标记 */
+			private var _l : Label;
+			/** 标记组 */
+			private var _ls : Dictionary;
+			
+			/**
+			 * 应用程序初始化完成
+			 * 
+			 * @param event
+			 */
+			protected function webApp_applicationCompleteHandler(event : FlexEvent) : void
+			{
+				this._sock = new Socket();  
+				this._sock.addEventListener(Event.CONNECT, onConnect);
+				this._sock.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
+				this._sock.addEventListener(ProgressEvent.SOCKET_DATA, MSGHandler);  
+				this._sock.connect("192.168.0.101", 4400);
+
+				this._ls = new Dictionary();
+			}
+			
+			/**
+			 * 鼠标点击事件
+			 * 
+			 * @param event 
+			 * 
+			 */
+			protected function webApp_clickHandler(event : MouseEvent) : void
+			{
+				if (this._l == null)
+				{
+					this._l = new Label();
+					this._l.text = "$";
+					this._l.x = event.localX;
+					this._l.y = event.localY;
+					this.addElement(this._l);
+					return;
+				}
+				
+				this.playMove(this._l, event.localX, event.localY);
+				
+				this._sock.writeUTFBytes("{msgTypeID:1002,msgBody:{x:" + event.localX + ",y:" + event.localY + "}}");
+				this._sock.flush();
+			}
+			
+			private function onConnect(e : Event) : void
+			{
+				this._t.text = "Connect to 192.168.0.101";
+				trace("Connection OK");  
+			}
+
+			private function onSecurityError(e : SecurityErrorEvent) : void
+			{
+				this._t.text = "Security Error : " + e.text;
+			}
+			
+			private function MSGHandler(event : ProgressEvent) : void  
+			{
+				var scmsg : String = this._sock.readUTFBytes(this._sock.bytesAvailable);
+				trace("Get Msg >> " + scmsg);
+				
+				var jsonObj : Object = JSON.decode(scmsg);
+
+				var l : Label = this._ls[jsonObj.msgBody.playerID];
+				
+				if (l == null)
+				{
+					l = new Label();
+					l.text = "$";
+					this._ls[jsonObj.msgBody.playerID] = l;
+					this.addElement(l);
+				}
+
+				playMove(l, jsonObj.msgBody.x, jsonObj.msgBody.y);
+			}
+			
+			private function playMove(target : Object, newX : Number, newY : Number) : void {  
+				var myMove : Move = new Move(target);
+				
+				myMove.duration = 1000;
+				myMove.xTo = newX;
+				myMove.yTo = newY;
+				
+				myMove.play();
+			}
+		]]>
+	</fx:Script>
+</s:Application>
