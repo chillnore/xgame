@@ -41,6 +41,7 @@ class MINA_IoHandler extends IoHandlerAdapter {
 
 		// TODO : 为玩家分派一个 SessionID
 		// TODO : 将 Session 加入到 OnlineSessionManager
+		OnlineSessionManager.theInstance().addSession(sess);
 	}
 
 	@Override

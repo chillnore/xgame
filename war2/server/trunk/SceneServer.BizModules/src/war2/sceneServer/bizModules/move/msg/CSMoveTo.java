@@ -3,6 +3,7 @@ package war2.sceneServer.bizModules.move.msg;
 import org.json.JSONObject;
 
 import war2.common.msg.AbstractExternalMsg;
+import war2.common.msg.XgameMsgError;
 
 /**
  * 移动消息
@@ -64,6 +65,16 @@ public class CSMoveTo extends AbstractExternalMsg {
 
 	@Override
 	public void deserializeFromJson(JSONObject jsonObj) {
+		if (jsonObj == null) {
+			return;
+		}
+
+		try {
+			this._x = jsonObj.getInt("x");
+			this._y = jsonObj.getInt("y");
+		} catch (Exception ex) {
+			throw new XgameMsgError(ex);
+		}
 	}
 
 	@Override

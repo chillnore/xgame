@@ -19,7 +19,7 @@ import war2.common.msg.AbstractExternalMsg;
 import war2.common.msg.AbstractMsg;
 import war2.common.msg.AbstractMsgMap;
 import war2.common.msg.AsyncMsgQueueProcessor;
-import war2.common.msg.MINA_CodecFactory;
+import war2.common.msg.MINA_MsgCodecFactory;
 import war2.common.msg.MsgJsonSerializer;
 import war2.common.utils.ClazzUtil;
 import war2.common.utils.PackageUtil;
@@ -332,7 +332,7 @@ public class SceneKernal {
 		IoAcceptor acceptor = new NioSocketAcceptor();
 
 		// 消息解码器工厂
-		MINA_CodecFactory mcf = new MINA_CodecFactory(new MsgJsonSerializer(this._msgMap));
+		MINA_MsgCodecFactory mcf = new MINA_MsgCodecFactory(new MsgJsonSerializer(this._msgMap));
 
 		// 添加自定义编解码器
 		acceptor.getFilterChain().addLast(CS_MSG_CODEC, new ProtocolCodecFilter(mcf));

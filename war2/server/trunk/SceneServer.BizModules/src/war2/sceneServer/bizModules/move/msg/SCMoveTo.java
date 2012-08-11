@@ -3,6 +3,8 @@ package war2.sceneServer.bizModules.move.msg;
 import org.json.JSONObject;
 
 import war2.common.msg.AbstractExternalMsg;
+import war2.common.msg.XgameMsgError;
+import war2.common.msg.buffer.MsgBuffer;
 
 /**
  * 移动
@@ -79,20 +81,56 @@ public class SCMoveTo extends AbstractExternalMsg {
 
 	@Override
 	public JSONObject serializeToJson() {
-		return null;
+		try {
+			JSONObject jsonObj = new JSONObject();
+
+			jsonObj.put("playerID", this._playerID);
+			jsonObj.put("x", this._x);
+			jsonObj.put("y", this._y);
+	
+			return jsonObj;
+		} catch (Exception ex) {
+			throw new XgameMsgError(ex);
+		}
 	}
 
 	@Override
 	public void deserializeFromJson(JSONObject jsonObj) {
+		if (jsonObj == null) {
+			return;
+		}
+
+		try {
+			this._playerID = jsonObj.getString("playerID");
+			this._x = jsonObj.getInt("x");
+			this._y = jsonObj.getInt("y");
+		} catch (Exception ex) {
+			throw new XgameMsgError(ex);
+		}
 	}
 
 	@Override
 	public byte[] serializeToBytes() {
-		return null;
+		MsgBuffer mb = MsgBuffer.allocate(2048);
+
+//		mb.putString(this._playerID, null);
+		mb.putInt(this._x);
+		mb.putInt(this._y);
+		mb.flip();
+
+		return mb.array();
 	}
 
 	@Override
 	public void deserializeFromBytes(byte[] bytes) {
+		if (bytes == null || 
+			bytes.length <= 0) {
+			return;
+		}
+
+		MsgBuffer mb = MsgBuffer.wrap(bytes);
+		this._x = mb.getInt();
+		this._y = mb.getInt();
 	}
 
 	@Override

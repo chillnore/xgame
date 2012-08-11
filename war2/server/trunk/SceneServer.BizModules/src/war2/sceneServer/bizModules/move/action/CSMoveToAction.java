@@ -18,16 +18,16 @@ public class CSMoveToAction extends SceneMsgAction<CSMoveTo> {
 			return;
 		}
 
-		// 获取玩家信息
-		Player p = this.getPlayerBySessionId(csmsg.getSessionID());
-
-		if (p == null) {
-			return;
-		}
+//		// 获取玩家信息
+//		Player p = this.getPlayerBySessionId(csmsg.getSessionID());
+//
+//		if (p == null) {
+//			return;
+//		}
 
 		SCMoveTo scmsg = new SCMoveTo();
 
-		scmsg.setPlayerID(p.getID());
+		scmsg.setPlayerID(String.valueOf(csmsg.getSessionID()));
 		scmsg.setX(csmsg.getX());
 		scmsg.setY(csmsg.getY());
 
