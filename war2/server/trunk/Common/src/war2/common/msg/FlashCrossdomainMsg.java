@@ -5,12 +5,12 @@ import java.nio.charset.Charset;
 import org.json.JSONObject;
 
 /**
- * <policy-file-request/> 消息
+ * Flash 安全策略文件
  * 
  * @author hjj2017
  *
  */
-public class FlashCrossdomainMsg extends AbstractExternalMsg {
+class FlashCrossdomainMsg extends AbstractExternalMsg {
 	/** 消息类型 ID */
 	static final int MSG_TYPE_ID = -2048;
 	/** 消息体 */

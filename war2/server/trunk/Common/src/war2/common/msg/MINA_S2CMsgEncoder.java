@@ -41,11 +41,13 @@ class MINA_S2CMsgEncoder extends ProtocolEncoderAdapter {
 		}
 
 		try {
+			// 获取消息对象
 			AbstractExternalMsg msg = (AbstractExternalMsg)obj;
-
+			// 创建字节数组
 			byte[] bytes = null;
 			
 			if (msg.getMsgTypeID() == FlashCrossdomainMsg.MSG_TYPE_ID) {
+				// 如果当前消息是 Flash 安全策略文件, 
 				// 直接获取消息字节数组
 				bytes = msg.serializeToBytes();
 			} else {
