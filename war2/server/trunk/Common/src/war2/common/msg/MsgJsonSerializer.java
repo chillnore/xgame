@@ -48,6 +48,8 @@ public class MsgJsonSerializer implements IMsgSerializer {
 		// 获取 JSON 字符串
 		String jsonStr = new String(byteArray, Charset.forName("UTF-8"));
 
+		System.out.println(jsonStr);
+
 		try {
 			// 创建 JSON 对象
 			JSONObject jsonObj = new JSONObject(jsonStr);

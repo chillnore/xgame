@@ -14,7 +14,7 @@ import war2.common.XgameNullArgsError;
  * @since 2012/1/24
  * 
  */
-public class MINA_CodecFactory implements ProtocolCodecFactory {
+public class MINA_MsgCodecFactory implements ProtocolCodecFactory {
 	/** 序列化器 */
 	private IMsgSerializer _serializer;
 
@@ -25,7 +25,7 @@ public class MINA_CodecFactory implements ProtocolCodecFactory {
 	 * @throws XgameNullArgsError if serializer == null 
 	 * 
 	 */
-	public MINA_CodecFactory(IMsgSerializer serializer) {
+	public MINA_MsgCodecFactory(IMsgSerializer serializer) {
 		if (serializer == null) {
 			throw new XgameNullArgsError("serializer");
 		}

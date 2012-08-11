@@ -40,21 +40,48 @@ class MINA_S2CMsgEncoder extends ProtocolEncoderAdapter {
 			return;
 		}
 
-		AbstractExternalMsg msg = (AbstractExternalMsg)obj;
-		// 将属性容器序列化为字节
-		byte[] bytes = this._serializer.serialize(msg);
+		try {
+			AbstractExternalMsg msg = (AbstractExternalMsg)obj;
 
-		if (bytes == null) {
+			byte[] bytes = null;
+			
+			if (msg.getMsgTypeID() == FlashCrossdomainMsg.MSG_TYPE_ID) {
+				// 直接获取消息字节数组
+				bytes = msg.serializeToBytes();
+			} else {
+				// 通过序列化工具获取消息字节数组
+				bytes = this._serializer.serialize(msg);
+			}
+
+			if (bytes == null) {
+				return;
+			}
+
+			// 创建字节缓存
+			IoBuffer buff = IoBuffer.allocate(bytes.length);
+			
+			buff.put(bytes);
+			buff.flip();
+	
+			// 写出缓存
+			output.write(buff);
+		} catch (Exception ex) {
+			// 记录异常日志
+			logError(new XgameMsgError(ex));
+		}
+	}
+
+	/**
+	 * 记录异常信息
+	 * 
+	 * @param err 
+	 * 
+	 */
+	private static void logError(Throwable err) {
+		if (err == null) {
 			return;
 		}
 
-		// 创建字节缓存
-		IoBuffer buff = IoBuffer.allocate(bytes.length);
-		
-		buff.put(bytes);
-		buff.flip();
-
-		// 写出缓存
-		output.write(buff);
+		MsgLogger.theInstance().logError(err);
 	}
 }

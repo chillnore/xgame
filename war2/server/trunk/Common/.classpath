@@ -2,7 +2,11 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Libraries/mina-core-2.0.4.jar"/>
+	<classpathentry kind="lib" path="/Libraries/mina-core-2.0.4.jar" sourcepath="D:/JAVA/apache-mina-2.0.4/src/mina-core/src/main/java.zip">
+		<attributes>
+			<attribute name="source_encoding" value="UTF-8"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="/Libraries/log4j-1.2.16.jar"/>
 	<classpathentry kind="lib" path="/Libraries/json-1.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>

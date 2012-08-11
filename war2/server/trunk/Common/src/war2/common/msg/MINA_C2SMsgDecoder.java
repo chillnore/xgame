@@ -44,21 +44,28 @@ class MINA_C2SMsgDecoder extends ProtocolDecoderAdapter {
 		// 创建字节数组
 		byte[] byteArray = buff.array();
 
-		// 将字节反序列化为消息
-		AbstractMsg msg = this._serializer.deserialize(byteArray);
+		String s = new String(byteArray).trim();
 
-		if (msg == null) {
+		if (s.equals("<policy-file-request/>")) {
+			session.write(new FlashCrossdomainMsg());
+			// 清除缓存
+			buff.limit(0);
+			buff.free();
 			return;
 		}
 
-		// 设置会话 ID
-		msg.setSessionID(session.getId());
-		
+		// 将字节反序列化为消息
+		AbstractMsg msg = this._serializer.deserialize(byteArray);
+
+		if (msg != null) {
+			// 设置会话 ID
+			msg.setSessionID(session.getId());
+			// 写出消息对象
+			output.write(msg);
+		}
+
 		// 清除缓存
 		buff.limit(0);
 		buff.free();
-
-		// 写出消息对象
-		output.write(msg);
 	}
 }
