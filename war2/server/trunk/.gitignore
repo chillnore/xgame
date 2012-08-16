@@ -1,3 +1,5 @@
 .metadata
 /Common/bin
-/GatewayServer/bin
+/LandingServer/bin
+/SceneServer/bin
+/SceneServer.BizModules/bin
