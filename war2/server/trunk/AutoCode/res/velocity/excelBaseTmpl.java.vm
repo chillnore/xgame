@@ -1,0 +1,101 @@
+package ${ebtc.packageName};
+
+// import
+#foreach (${i} in ${ebtc.importList})
+import ${i};
+#end
+
+/**
+ * ${ebtc.sheetName}, <b>不要修改该文件</b>
+ * 
+ * @author autoCode
+ * 
+ */
+public abstract class ${ebtc.clazzName}BaseTmpl {
+
+// Field
+///////////////////////////////////////////////////////////////////
+
+#foreach (${f} in ${ebtc.fieldList})
+	/** ${f.columnName} */
+#if (${f.multiLangField})
+	@MultiLang(symbol = ${f.multiLangSymbol}, groupName = "${f.multiLangGroupName}")
+#end
+	private ${f.fieldTypeStr} ${f.privateFieldName};
+#end
+
+// Getter and Setter
+///////////////////////////////////////////////////////////////////
+
+#foreach (${f} in ${ebtc.fieldList})
+	/** 
+	 * 获取 ${f.columnName}
+	 * 
+	 * @return 
+	 * 
+	 */
+	public ${f.fieldTypeStr} ${f.getterName}() {
+		return this.${f.privateFieldName};
+	}
+
+	/** 
+	 * 设置 ${f.columnName}
+	 * 
+	 * @param value 
+	 * @return 
+	 * 
+	 */
+	protected void ${f.setterName}(${f.fieldTypeStr} value) {
+		this.${f.privateFieldName} = value;
+	}
+
+#end
+
+	/**
+	 * 设置键值
+	 * 
+	 * @param key 
+	 * @param value
+	 * @return  
+	 * 
+	 */
+	public void putKeyValue(String key, String value) {
+		if (key == null) {
+			return;
+		}
+
+/// __FORMAT_START(tabIndex=2)
+	#foreach (${f} in ${ebtc.fieldList})
+		if (key.equals("${f.columnName}")) {
+			if (value == null || value.isEmpty()) {
+				## 是否允许为空?
+    			#if (${f.nullable})
+        			return;
+    			#else
+					// 不允许空值
+					throw new RuntimeException("value is null");
+    			#end
+			}
+
+			#foreach (${c} in ${f.constraintsList})
+				#parse("./constraints/${c.class.simpleName}.java.vm")
+            #end
+
+            #if (${f.fieldTypeStr} == "int")
+				## 转成 int 类型
+				this.${f.setterName}(Integer.parseInt(value));
+            #elseif (${f.fieldTypeStr} == "long")
+				## 转成 long 类型
+            	this.${f.setterName}(Long.parseLong(value));
+            #elseif (${f.fieldTypeStr} == "String")
+				## 转成 String 类型
+            	this.${f.setterName}(value);
+			#end
+
+			return;
+		}
+
+	#end
+/// __FORMAT_OVER
+	}
+}

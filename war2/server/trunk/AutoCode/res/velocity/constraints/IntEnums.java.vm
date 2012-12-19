@@ -1,0 +1,15 @@
+#if (${c.values})
+	java.util.Set<Integer> set_${c.ID} = new java.util.HashSet<Integer>();
+		
+	#foreach (${val} in ${c.values})
+		set_${c.ID}.add(${val});
+	#end
+
+	if (!set_${c.ID}.contains(Integer.parseInt(value))) {
+		throw new RuntimeException(Integer.parseInt(value) + "not in enums");
+	}
+
+	// 清除引用
+	set_${c.ID}.clear();
+	set_${c.ID} = null;
+#end

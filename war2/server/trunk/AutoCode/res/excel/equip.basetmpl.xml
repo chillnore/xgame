@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<excelBaseTmpl xmlns="http://www.xgame.com"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.xgame.com ./excelBaseTmpl.xsd"
+	packageName="com.xgame.bizmodule.equip.tmpl"
+	excelFileName="equip.xls">
+
+	<baseTmpl sheet="装备">
+		<field column="ID" type="int" />
+		<field column="名称" type="string" />
+		<field column="说明" type="string" />
+		<field column="普通攻击" type="int" />
+		<field column="普通防御" type="int" />
+		<field column="战法攻击" type="int" />
+		<field column="战法防御" type="int" />
+		<field column="买入价" type="int" />
+		<field column="卖出价" type="int" />
+		<field column="出现概率" type="int" />
+	</baseTmpl>
+
+</excelBaseTmpl>
