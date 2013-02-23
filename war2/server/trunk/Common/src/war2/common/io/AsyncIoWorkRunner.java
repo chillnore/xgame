@@ -111,7 +111,7 @@ class AsyncIoWorkRunner<E extends Enum<E>> implements Runnable {
 	/**
 	 * 记录错误信息
 	 * 
-	 * @param msg 
+	 * @param err
 	 * 
 	 */
 	private static void logError(Throwable err) {

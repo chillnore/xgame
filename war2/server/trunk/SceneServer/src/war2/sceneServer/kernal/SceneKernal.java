@@ -117,7 +117,10 @@ public class SceneKernal {
 
 		// 获取当前应用目录
 		String sceneBizModulesDir = this.getSceneBizModulesDir();
-		
+
+		// 加在场景服务器业务模块
+		logInfo(sceneBizModulesDir);
+
 		// 获取类列表
 		Set<Class<?>> clazzSet = PackageUtil.listClazz(
 			sceneBizModulesDir, 

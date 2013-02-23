@@ -61,7 +61,7 @@ class MsgBufferHexDumper {
      * 
      * @param in the buffer to dump
      * @param lengthLimit the limit at which hex dumping will stop
-     * @return a hex formatted string representation of the <i>in</i> {@link Iobuffer}.
+     * @return a hex formatted string representation of the <i>in</i> {@link MsgBuffer}.
      */
     public static String getHexdump(MsgBuffer in, int lengthLimit) {
         if (lengthLimit == 0) {

@@ -118,7 +118,7 @@ final class AsyncMsgQueueRunner implements Runnable {
 	/**
 	 * 获取消息行为
 	 * 
-	 * @param msgTypeID
+	 * @param msg
 	 * @return
 	 * 
 	 */
@@ -177,7 +177,7 @@ final class AsyncMsgQueueRunner implements Runnable {
 	/**
 	 * 记录错误信息
 	 * 
-	 * @param msg 
+	 * @param err
 	 * 
 	 */
 	private static void logError(Throwable err) {

@@ -11,7 +11,7 @@ import war2.common.XgameLogger;
 class KernalLogger extends XgameLogger {
 	/** 单例对象 */
 	private static volatile KernalLogger _instance;
-	
+
 	/**
 	 * 类默认构造器
 	 * 
