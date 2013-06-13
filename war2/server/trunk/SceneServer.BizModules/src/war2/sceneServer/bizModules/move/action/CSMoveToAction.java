@@ -2,7 +2,6 @@ package war2.sceneServer.bizModules.move.action;
 
 import war2.sceneServer.bizModules.move.msg.CSMoveTo;
 import war2.sceneServer.bizModules.move.msg.SCMoveTo;
-import war2.sceneServer.kernal.Player;
 import war2.sceneServer.kernal.SceneMsgAction;
 
 /**

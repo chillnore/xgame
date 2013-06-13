@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns="http://www.xgame.com"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.xgame.com"
+	elementFormDefault="qualified">
+
+<!-- 
+// messageDef
+/////////////////////////////////////////////////////////////////// 
+//-->
+	<xs:element name="messageDef">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="message" 
+					minOccurs="0" maxOccurs="unbounded" />
+				<xs:element ref="cake" 
+					minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="package" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation><![CDATA[JAVA 程序包名称, 代码生成工具会根据包名称自动创建包目录并将代码文件放置到包目录中]]></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="handler" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation><![CDATA[消息处理类, 一般命名为 xxxMsgHandler]]></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+<!-- 
+// message
+/////////////////////////////////////////////////////////////////// 
+//-->
+	<xs:element name="message">
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="field" />
+				<xs:element ref="array" />
+				<xs:element ref="hash" />
+			</xs:choice>
+			<xs:attribute name="ID" type="xs:ID" use="required">
+				<xs:annotation>
+					<xs:documentation><![CDATA[消息 ID]]></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+<!-- 
+// field 消息字段
+/////////////////////////////////////////////////////////////////// 
+// 在字段类型中定义了 cakeObj 和 cakeInc.
+// cakeObj 与 cakeInc 不同在于: 
+// cakeObj 将 Cake 标记作为一个对象引用;
+// cakeInc 将 Cake 标记中的属性定义引入当前位置;
+// 
+// 示例：
+// 
+// <cake name="userMsgCake">
+//     <field name="userName" type="string" />
+//     <field name="userPass" type="string" />
+// </cake>
+// 
+// <message name="msg0">
+//     <field name="user" type="cakeObj" cakeRef="userMsgCake" />
+// </message>
+// 
+// <message name="msg1">
+//     <field name="user" type="cakeInc" cakeRef="userMsgCake" />
+// </message>
+// 
+// 对于 msg0 所生成的代码如下(以 Java 为例)：
+// 
+// class Msg0 {
+//     public User user; // 将 Cake 标记作为一个对象引用;
+// }
+// 
+// 对于 msg1 所生成的代码如下(以 Java 为例)：
+// 
+// class Msg1 {
+//     public String userName; // 将 Cake 标记中的 userName 属性定义引入当前位置;
+//     public String userPass; // 将 Cake 标记中的 userPass 属性定义引入当前位置;
+// }
+// 
+//-->
+	<xs:element name="field">
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation><![CDATA[消息字段名称]]></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="type" use="required">
+				<xs:annotation>
+					<xs:documentation><![CDATA[基础类型]]></xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="boolean" />
+						<xs:enumeration value="int" />
+						<xs:enumeration value="long" />
+						<xs:enumeration value="string" />
+						<xs:enumeration value="array" />
+						<!--// 注意！ cakeObj 与 cakeInc 是有区别的 //-->
+						<xs:enumeration value="cakeObj" />
+						<xs:enumeration value="cakeInc" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="cakeRef" type="xs:IDREF">
+				<xs:annotation>
+					<xs:documentation><![CDATA[Cake 类型引用, 当 type 属性设置为 cakeObj 或者 cakeInc 时, 该属性值才生效]]></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="comment" type="xs:string">
+				<xs:annotation>
+					<xs:documentation><![CDATA[注释信息]]></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+<!-- 
+// array 数组
+/////////////////////////////////////////////////////////////////// 
+//-->
+	<xs:element name="array">
+		<xs:complexType>
+			<xs:attributeGroup ref="arrayAndHash" />
+		</xs:complexType>
+	</xs:element>
+
+<!-- 
+// hash 哈希
+/////////////////////////////////////////////////////////////////// 
+//-->
+	<xs:element name="hash">
+		<xs:complexType>
+			<xs:attributeGroup ref="arrayAndHash" />
+			<xs:attribute name="keyType" use="required">
+				<xs:annotation>
+					<xs:documentation><![CDATA[关键字类型]]></xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="int" />
+						<xs:enumeration value="long" />
+						<xs:enumeration value="string" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+<!-- 
+// 数组和哈希结构属性定义
+///////////////////////////////////////////////////////////////////
+//-->
+	<xs:attributeGroup name="arrayAndHash">
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation><![CDATA[字段名称]]></xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="elementType" use="required">
+			<xs:annotation>
+				<xs:documentation><![CDATA[基础类型]]></xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="boolean" />
+					<xs:enumeration value="int" />
+					<xs:enumeration value="long" />
+					<xs:enumeration value="string" />
+					<xs:enumeration value="cakeObj" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="cakeRef" type="xs:IDREF">
+			<xs:annotation>
+				<xs:documentation><![CDATA[Cake 类型引用, 当 type 属性设置为 cake-obj 时, 该属性值才生效]]></xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="comment" type="xs:string">
+			<xs:annotation>
+				<xs:documentation><![CDATA[注释信息]]></xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+<!-- 
+// cake
+/////////////////////////////////////////////////////////////////// 
+//-->
+	<xs:element name="cake">
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="field" />
+				<xs:element ref="array" />
+				<xs:element ref="hash" />
+			</xs:choice>
+			<xs:attribute name="ID" type="xs:ID" use="required">
+				<xs:annotation>
+					<xs:documentation><![CDATA[基础类型]]></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

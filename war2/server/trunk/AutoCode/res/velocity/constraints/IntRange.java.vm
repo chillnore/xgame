@@ -1,0 +1,11 @@
+#if (${c.minValue})
+	## 如果只有最小值
+	if (Integer.parseInt(value) < ${c.minValue}) {
+		throw new RuntimeException("value < " + ${c.minValue});
+	}
+#elseif (${c.maxValue})
+	## 如果只有最大值
+	if (Integer.parseInt(value) > ${c.maxValue}) {
+		throw new RuntimeException("value > " + ${c.maxValue});
+	}
+#end

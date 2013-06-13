@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<excelBaseTmpl xmlns="http://www.xgame.com"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.xgame.com ./excelBaseTmpl.xsd"
+	packageName="com.xgame.bizmodule.world.tmpl" 
+	excelFileName="world.xls">
+
+	<baseTmpl sheet="世界城市">
+		<field column="ID" type="int" />
+		<field multiLang="key, name" column="名称LangKey" type="string" />
+		<field multiLang="val, name" column="名称" type="string" />
+		<field column="坐标X" type="int">
+			<constraints>
+				<intRange minValue="0" maxValue="1024" />
+			</constraints>
+		</field>
+		<field column="坐标Y" type="int">
+			<constraints>
+				<intRange minValue="0" maxValue="800" />
+			</constraints>
+		</field>
+		<field column="图片" type="string" />
+		<field multiLang="key, desc" column="说明LangKey" type="string" />
+		<field multiLang="val, desc" column="说明" type="string" />
+		<field column="功能ID0" type="int" />
+		<field column="功能ID1" type="int" nullable="true" />
+		<field column="功能ID2" type="int" nullable="true" />
+		<field column="功能ID3" type="int" nullable="true" />
+		<field column="功能ID4" type="int" nullable="true" />
+	</baseTmpl>
+
+	<baseTmpl sheet="城市功能">
+		<field column="ID" type="int" />
+		<field multiLang="key, name" column="名称LangKey" type="string" />
+		<field multiLang="val, name" column="名称" type="string" />
+		<field column="图片" type="string" />
+		<field multiLang="key, desc" column="说明LangKey" type="string" />
+		<field multiLang="val, desc" column="说明" type="string" />
+	</baseTmpl>
+
+</excelBaseTmpl>

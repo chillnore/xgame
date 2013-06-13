@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<messageDef xmlns="http://www.xgame.com"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.xgame.com ./msg.xsd"
+	package="com.xgame.bizmodule.world.msg"
+	handler="WorldMsgHandler">
+
+	<message ID="CS_SHOW_CITY_LIST">
+	</message>
+
+	<message ID="SC_SHOW_CITY_LIST">
+		<field name="regionID" type="int" comment="区域 ID" />
+		<array name="cityList" elementType="cakeObj" cakeRef="CityMsgCake" comment="城市列表" />
+	</message>
+
+	<message ID="CS_SHOW_ONE_CITY">
+		<field name="cityID" type="int" comment="区域 ID" />
+	</message>
+
+	<message ID="SC_SHOW_ONE_CITY">
+		<field name="currCity" type="cakeInc" cakeRef="CityMsgCake" comment="当前城市" />
+	</message>
+
+	<cake ID="CityMsgCake">
+		<field name="cityID" type="int" comment="城市 ID" />
+		<field name="cityName" type="string" comment="城市名称" />
+		<field name="cityDesc" type="string" comment="城市描述" />
+		<field name="cityFeature" type="int" comment="城市特色" />
+		<array name="funcList" elementType="cakeObj" cakeRef="FuncMsgCake" comment="功能列表" />
+	</cake>
+
+	<cake ID="FuncMsgCake">
+		<field name="funcID" type="int" comment="功能 ID" />
+		<field name="funcName" type="string" comment="功能名称" />
+		<field name="funcDesc" type="string" comment="功能描述" />
+		<field name="enabled" type="boolean" comment="是否可用" />
+	</cake>
+</messageDef>

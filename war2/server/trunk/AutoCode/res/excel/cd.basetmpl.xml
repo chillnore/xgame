@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<excelBaseTmpl xmlns="http://www.xgame.com"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.xgame.com ./excelBaseTmpl.xsd"
+	packageName="com.xgame.bizmodule.cd.tmpl"
+	excelFileName="cd.xls">
+
+	<baseTmpl sheet="冷却类型">
+		<field column="ID" type="int" />
+		<field column="名称" type="string" />
+		<field column="说明" type="string" nullable="true" />
+		<field column="阀值" type="int" />
+		<field column="归零所需金币" type="int">
+			<constraints>
+				<intRange minValue="1" />
+			</constraints>
+		</field>
+	</baseTmpl>
+
+	<baseTmpl sheet="疲劳度">
+		<field column="ID" type="int" comment="操作次数" />
+		<field column="冷却类型" type="int">
+			<constraints>
+				<intEnums values="1, 2, 3, 4, 5, 6, 7, 8, 9" />
+			</constraints>
+		</field>
+		<field column="疲劳值" type="int" />
+	</baseTmpl>
+
+</excelBaseTmpl>
