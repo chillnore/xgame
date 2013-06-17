@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns="http://www.xgame.com"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.xgame.com"
+	elementFormDefault="qualified">
+
+<!-- 
+// excelBaseTmpl
+/////////////////////////////////////////////////////////////////// 
+//-->
+	<xs:element name="excelBaseTmpl">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="baseTmpl" minOccurs="1" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="packageName" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation><![CDATA[JAVA 程序包名称, 代码生成工具会根据包名称自动创建包目录并将代码文件放置到包目录中]]></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="excelFileName" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation><![CDATA[所对应的文件名称]]></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+<!-- 
+// baseTmpl
+/////////////////////////////////////////////////////////////////// 
+//-->
+	<xs:element name="baseTmpl">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="field" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="sheet" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation><![CDATA[当前 template 标记所对应的 Excel 工作表单]]></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+<!-- 
+// field
+/////////////////////////////////////////////////////////////////// 
+//-->
+	<xs:element name="field">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice minOccurs="0" maxOccurs="1">
+					<xs:element ref="constraints" />
+				</xs:choice>
+			</xs:sequence>
+			<xs:attribute name="column" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation><![CDATA[当前 field 标记所对应的 Excel 数据列]]></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="type" use="required">
+				<xs:annotation>
+					<xs:documentation><![CDATA[基础类型]]></xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="boolean" />
+						<xs:enumeration value="int" />
+						<xs:enumeration value="long" />
+						<xs:enumeration value="string" />
+						<xs:enumeration value="array" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="comment" type="xs:string">
+				<xs:annotation>
+					<xs:documentation><![CDATA[注释信息]]></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="nullable" type="xs:boolean" 
+				default="false">
+				<xs:annotation>
+					<xs:documentation><![CDATA[是否可以为空]]></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="multiLang" type="xs:string">
+				<xs:annotation>
+					<xs:documentation><![CDATA[多语言标识, 格式为: <key|val>, <groupName> 例如: 
+					<p><font color="#000099">
+						<field multiLang="key, group0" column="道具名称LangKey" /><br>
+						<field multiLang="val, group0" column="道具名称" />
+					</font></p>]]></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+<!-- 
+// constraints
+/////////////////////////////////////////////////////////////////// 
+//-->
+	<xs:element name="constraints">
+		<xs:annotation>
+			<xs:documentation><![CDATA[约束列表]]></xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="intRange" />
+				<xs:element ref="intEnums" />
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+<!-- 
+// intRange
+/////////////////////////////////////////////////////////////////// 
+//-->
+	<xs:element name="intRange">
+		<xs:annotation>
+			<xs:documentation><![CDATA[整数范围约束]]></xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="minValue" type="xs:int">
+				<xs:annotation>
+					<xs:documentation><![CDATA[最小值]]></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="maxValue" type="xs:int">
+				<xs:annotation>
+					<xs:documentation><![CDATA[最大值]]></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+<!-- 
+// intEnums
+/////////////////////////////////////////////////////////////////// 
+//-->
+	<xs:element name="intEnums">
+		<xs:annotation>
+			<xs:documentation><![CDATA[整数枚举约束]]></xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="values" type="xs:string">
+				<xs:annotation>
+					<xs:documentation><![CDATA[枚举值]]></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>
