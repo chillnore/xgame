@@ -1,5 +1,9 @@
 .metadata
 /Common/bin
+/Common/make/ant
 /LandingServer/bin
+/LandingServer/make/ant
 /SceneServer/bin
+/SceneServer/make/ant
 /SceneServer.BizModules/bin
+/SceneServer.BizModules/make/ant
