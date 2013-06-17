@@ -8,7 +8,7 @@ package xgame.common.io
  * @tparam T
  *
  */
-trait TIoWorkProcedure[T <: TIoWork] {
+private[io] trait TIoWorkProcedure[T <: TIoWork] {
     /**
      * 开始异步工作
      *

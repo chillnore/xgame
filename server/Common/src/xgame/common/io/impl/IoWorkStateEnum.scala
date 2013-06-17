@@ -1,4 +1,4 @@
-package xgame.common.io
+package xgame.common.io.impl
 
 /**
  * 异步操作状态枚举
@@ -7,7 +7,7 @@ package xgame.common.io
  * @since 2013/6/16
  *
  */
-object IoWorkStateEnum extends Enumeration {
+private[io] object IoWorkStateEnum extends Enumeration {
     type IoWorkStateEnum = Value
 
     /** 无状态 */

@@ -1,6 +1,6 @@
 package xgame.common.io.impl
 
-import xgame.common.io.{StatefulIoWork, TIoWorkProcedure}
+import xgame.common.io.{TIoWorkProcedure}
 
 /**
  * 同步 IO 工作过程

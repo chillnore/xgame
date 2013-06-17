@@ -1,5 +1,7 @@
 package xgame.common.io
 
+import impl.SyncIoWorkProcedure
+
 /**
  * IO 操作服务
  *
@@ -8,5 +10,5 @@ package xgame.common.io
  *
  */
 object IoWorkService {
-    val p : impl.AsyncIoWorkProcedure = null
+    var p : TIoWorkProcedure[TIoWork] = new SyncIoWorkProcedure
 }
