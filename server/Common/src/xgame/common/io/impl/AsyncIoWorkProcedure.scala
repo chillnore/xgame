@@ -1,6 +1,6 @@
 package xgame.common.io.impl
 
-import xgame.common.io.{TIoWorkProcedure}
+import xgame.common.io.{TIoWork, TIoWorkProcedure}
 
 /**
  * 同步 IO 工作过程
@@ -9,8 +9,8 @@ import xgame.common.io.{TIoWorkProcedure}
  * @since 2013/6/17
  *
  */
-private[io] class AsyncIoWorkProcedure extends TIoWorkProcedure[StatefulIoWork] {
+private[io] class AsyncIoWorkProcedure extends TIoWorkProcedure[TIoWork] {
     // @Override
-    def startWork(work : StatefulIoWork) = {
+    def startWork(work : TIoWork) = {
     }
 }
