@@ -9,4 +9,5 @@ import io.IoWorkService
 object Test {
     IoWorkService.asyncMode = true
     IoWorkService.startWork(null)
+    var err : XgameError = new XgameError(new XgameError())
 }

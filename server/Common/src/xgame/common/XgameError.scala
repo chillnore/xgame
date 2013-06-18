@@ -8,4 +8,12 @@ package xgame.common
  *
  */
 class XgameError(val msg : String = null, val err : Throwable = null) extends RuntimeException(msg, err) {
+   /**
+    * 类参数构造器
+    *
+    * @param err
+    * @return
+    *
+    */
+    def this(err : Throwable) = this(null, err)
 }
