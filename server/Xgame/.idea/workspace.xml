@@ -1,8 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="278523bd-b537-4212-ad0d-664ec45e89e8" name="Default" comment="" />
-    <ignored path="Common.iws" />
+    <list default="true" id="5dfca655-72d3-49fe-8d5a-52dfa8a353f3" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/ant.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scala_compiler.xml" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\.idea\.name" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\.idea\ant.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\.idea\codeStyleSettings.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\.idea\compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\.idea\copyright\profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\.idea\encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\.idea\misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\.idea\modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\.idea\scala_compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\.idea\scala_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\.idea\scopes\scope_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\.idea\uiDesigner.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\.idea\vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\.idea\workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\Common.iml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\src\xgame\common\Test.scala" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\src\xgame\common\XgameError.scala" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\src\xgame\common\io\IoWorkService.scala" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\src\xgame\common\io\TIoWork.scala" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\src\xgame\common\io\TIoWorkProcedure.scala" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\src\xgame\common\io\impl\AsyncIoWorkProcedure.scala" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\src\xgame\common\io\impl\IoWorkStateEnum.scala" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\src\xgame\common\io\impl\StatefulIoWork.scala" afterPath="" />
+      <change type="DELETED" beforePath="D:\Git\GitHub\xgame\server\Common\src\xgame\common\io\impl\SyncIoWorkProcedure.scala" afterPath="" />
+    </list>
+    <ignored path="Xgame.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -54,14 +83,14 @@
     <ui_properties />
   </component>
   <component name="FavoritesManager">
-    <favorites_list name="Common" />
+    <favorites_list name="Xgame" />
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="IoWorkService.scala" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/xgame/common/io/IoWorkService.scala">
+      <file leaf-file-name="AsyncIoWorkProcedure.scala" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Common/src/xgame/common/io/impl/AsyncIoWorkProcedure.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="0" selection-start="455" selection-end="455" vertical-scroll-proportion="0.54545456">
+            <state line="16" column="0" selection-start="288" selection-end="288" vertical-scroll-proportion="0.4848485">
               <folding />
             </state>
           </provider>
@@ -75,106 +104,13 @@
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
-    <option name="SYNC_SETTING" value="DONT" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
-  </component>
-  <component name="GradleLocalSettings">
-    <option name="expandStates">
-      <map>
-        <entry key="Common" value="true" />
-      </map>
-    </option>
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="changedFiles">
-      <list>
-        <option value="$PROJECT_DIR$/src/xgame/common/Hello.scala" />
-        <option value="$PROJECT_DIR$/src/xgame/common/io/IIoWork.scala" />
-        <option value="$PROJECT_DIR$/src/xgame/common/io/StatefulIoWork.scala" />
-        <option value="$PROJECT_DIR$/src/xgame/common/io/IoWorkStateEnum.scala" />
-        <option value="$PROJECT_DIR$/src/xgame/common/io/impl/SyncIoWorkProcedure.scala" />
-        <option value="$PROJECT_DIR$/src/xgame/common/io/impl/IoWorkStateEnum.scala" />
-        <option value="$PROJECT_DIR$/src/xgame/common/io/impl/StatefulIoWork.scala" />
-        <option value="$PROJECT_DIR$/src/xgame/common/io/IoWorkService.scala" />
-        <option value="$PROJECT_DIR$/src/xgame/common/io/TIoWorkProcedure.scala" />
-        <option value="$PROJECT_DIR$/src/xgame/common/io/impl/AsyncIoWorkProcedure.scala" />
-        <option value="$PROJECT_DIR$/src/xgame/common/Test.scala" />
-        <option value="$PROJECT_DIR$/src/xgame/common/XgameError.scala" />
-      </list>
-    </option>
-  </component>
-  <component name="MavenRunner">
-    <option name="jreName" value="#JAVA_INTERNAL" />
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="58" />
     <option name="y" value="-4" />
     <option name="width" value="1226" />
     <option name="height" value="808" />
-  </component>
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State>
-            <id />
-          </State>
-          <State>
-            <id>Android</id>
-          </State>
-          <State>
-            <id>CSS</id>
-          </State>
-          <State>
-            <id>CorrectnessLintAndroid</id>
-          </State>
-          <State>
-            <id>IconsUsabilityLintAndroid</id>
-          </State>
-          <State>
-            <id>LintAndroid</id>
-          </State>
-          <State>
-            <id>Numeric issues</id>
-          </State>
-          <State>
-            <id>Probable bugs</id>
-          </State>
-          <State>
-            <id>RELAX NG</id>
-          </State>
-          <State>
-            <id>Scala: General</id>
-          </State>
-          <State>
-            <id>Scala: Method signature</id>
-          </State>
-          <State>
-            <id>Scala: Scaladoc</id>
-          </State>
-          <State>
-            <id>Scaladoc</id>
-          </State>
-          <State>
-            <id>Threading issues</id>
-          </State>
-          <State>
-            <id>UsabilityLintAndroid</id>
-          </State>
-          <State>
-            <id>XPath</id>
-          </State>
-          <State>
-            <id>XSLT</id>
-          </State>
-        </expanded-state>
-        <selected-state>
-          <State>
-            <id>Abstraction issues</id>
-          </State>
-        </selected-state>
-      </profile-state>
-    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -185,7 +121,7 @@
     <OptionsSetting value="true" id="Edit" />
     <OptionsSetting value="true" id="Undo Check Out" />
     <OptionsSetting value="true" id="Get Latest Version" />
-    <ConfirmationsSetting value="2" id="Add" />
+    <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
@@ -204,124 +140,48 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Common" />
+              <option name="myItemId" value="Xgame" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Common" />
+              <option name="myItemId" value="Xgame" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Common" />
+              <option name="myItemId" value="UTest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Common" />
+              <option name="myItemId" value="Xgame" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="io" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="io" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="impl" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
+        <subPane subId="Project Files" />
       </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Facets" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.lastSelected" value="preferences.sourceCode.General" />
+    <property name="options.lastSelected" value="org.jetbrains.plugins.scala.compiler.ScalacConfigurable" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
@@ -329,8 +189,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -364,24 +224,6 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -408,6 +250,24 @@
       <envs />
       <properties />
       <listeners />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -468,9 +328,6 @@
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
-  <component name="StructureViewFactory">
-    <option name="ACTIVE_ACTIONS" value="ALPHA_COMPARATOR" />
-  </component>
   <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false">
     <option name="USER" value="" />
     <option name="PASSWORD" value="" />
@@ -491,9 +348,9 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="278523bd-b537-4212-ad0d-664ec45e89e8" name="Default" comment="" />
-      <created>1371384631716</created>
-      <updated>1371384631716</updated>
+      <changelist id="5dfca655-72d3-49fe-8d5a-52dfa8a353f3" name="Default" comment="" />
+      <created>1372815345583</created>
+      <updated>1372815345583</updated>
     </task>
     <servers />
   </component>
@@ -503,21 +360,21 @@
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32824427" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.67105263" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32824427" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977098" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2617622" sideWeight="0.3740458" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2617622" sideWeight="0.61526716" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24893071" sideWeight="0.670229" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -619,65 +476,16 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/xgame/common/io/impl/StatefulIoWork.scala">
+    <entry file="file://$PROJECT_DIR$/Common/src/xgame/common/Test.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="17" selection-start="384" selection-end="384" vertical-scroll-proportion="0.030303031">
+        <state line="13" column="0" selection-start="211" selection-end="211" vertical-scroll-proportion="0.3939394">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/xgame/common/io/impl/SyncIoWorkProcedure.scala">
+    <entry file="file://$PROJECT_DIR$/Common/src/xgame/common/io/impl/AsyncIoWorkProcedure.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="3" selection-start="149" selection-end="149" vertical-scroll-proportion="0.3030303">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xgame/common/io/impl/AsyncIoWorkProcedure.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="288" selection-end="288" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xgame/common/io/impl/IoWorkStateEnum.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="19" selection-start="68" selection-end="68" vertical-scroll-proportion="0.15151516">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xgame/common/Test.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="37" selection-start="186" selection-end="186" vertical-scroll-proportion="0.33333334">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xgame/common/XgameError.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="311" selection-end="311" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xgame/common/io/TIoWork.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="27" selection-start="240" selection-end="240" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xgame/common/io/TIoWorkProcedure.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="18" selection-start="120" selection-end="120" vertical-scroll-proportion="0.3030303">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xgame/common/io/IoWorkService.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="455" selection-end="455" vertical-scroll-proportion="0.54545456">
+        <state line="16" column="0" selection-start="288" selection-end="288" vertical-scroll-proportion="0.4848485">
           <folding />
         </state>
       </provider>
@@ -699,7 +507,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
-          <last-edited>Scala (Common)|Scala</last-edited>
+          <last-edited>Scala (UTest)|Scala</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -740,6 +548,7 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
@@ -747,7 +556,7 @@
       </state>
       <state key="ProjectJDKs.UI">
         <settings>
-          <last-edited>jdk1.7.0_06</last-edited>
+          <last-edited>jdk1.7</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -759,7 +568,6 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>Scala-2.10.2</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
